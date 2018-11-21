@@ -37,7 +37,8 @@ module.exports = {
         items: [
           { text: '导航', link: '/archives/' },
           { text: '前端', link: '/frontEnd/' },
-          { text: '后端', link: '/backEnd/' }
+          { text: '后端', link: '/backEnd/' },
+          { text: '工具', link: '/tools/' }
         ]
       },
       { text: '📚阅读', link: '/book/' },
@@ -50,6 +51,7 @@ module.exports = {
     sidebar: {
       '/frontEnd/': getBlogSidebar('前端'),
       '/backEnd/': getBlogSidebar('后端'),
+      '/tools/': getBlogSidebar('工具'),
       '/book/': getBlogSidebar('阅读'),
       '/diary/': getBlogSidebar('日记'),
       '/note/': getBlogSidebar('杂记'),
@@ -150,6 +152,18 @@ function getBlogSidebar(type) {
         }
       ]
 
+    case '工具':
+      return [
+        ['', '工具集合'],
+        {
+          title: 'Mac',
+          children: [
+            ['./Mac/brew', 'Homebrew - Mac 下的包管理工具'],
+            ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
+          ]
+        }
+      ]
+
     case '阅读':
       return [
         '使用webpack定制前端开发环境'
@@ -163,6 +177,7 @@ function getBlogSidebar(type) {
         {
           title: '工作',
           children: [
+            ['./work/2018.11.21', '2018.11.21 Chart.js Resize 探究'],
             ['./work/2018.11.19', '2018.11.19 模块化探究'],
             ['./work/2018.09.21', '2018.09.21 探秘 visibility: collapse'],
             ['./work/2018.08.22', '2018.08.22 对象比较注意点'],
