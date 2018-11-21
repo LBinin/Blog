@@ -40,7 +40,7 @@ zsh 虽然强大，但是也有缺点，就是配置太麻烦，好在有一个�
 ### 安装
 
 ```bash
-$ sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+$ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
 ## 快捷命令
@@ -178,9 +178,9 @@ plugins=(其他的插件 zsh-syntax-highlighting)
 ## 参看资料
 
 > [zsh+on-my-zsh配置教程指南（程序员必备） - Michael翔的IT私房菜 - SegmentFault 思否](https://segmentfault.com/a/1190000013612471)
-> 
+>
 > [技术|自动补完不算什么，一键直达目录才是终极神器！](https://linux.cn/article-3401-1.html)
-> 
+>
 > [zsh 全程指南 | 小土刀](https://wdxtub.com/2016/02/18/oh-my-zsh/)
-> 
+>
 > [那些我希望在一开始使用 Zsh(oh-my-zsh) 时就知道的 - Xavier’s blog - SegmentFault 思否](https://segmentfault.com/a/1190000002658335)
