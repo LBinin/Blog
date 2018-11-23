@@ -6,7 +6,7 @@ sidebar: auto
 
 ## 博客
 
-- [x] 排序算法
+- [ ] 排序算法
 - [x] 柯里化 Curry
 - [ ] 正则
 - [ ] 函数式编程
@@ -16,6 +16,7 @@ sidebar: auto
 - [ ] JS 高阶函数
 - [ ] import、require、export、module.exports 混合使用详解(http://imweb.io/topic/582293894067ce9726778be9)
 - [ ] 「空格之神」插件源码分析
+- [ ] `word-break` 和 `white-space` 用法与区别
 - [ ] 一篇关于 CSS Loading 的「哲学」[83 CSS Loaders](https://freefrontend.com/css-loaders/)
 
 ## 想法

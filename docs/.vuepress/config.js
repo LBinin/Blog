@@ -4,7 +4,6 @@ module.exports = {
   title: 'Bigno',
   description: '🤟🏻',
   serviceWorker: true,
-  // permalink: '/:year/:month/:day/:slug',
   contentLoading: true,
   configureWebpack: {
     resolve: {
@@ -30,7 +29,8 @@ module.exports = {
   themeConfig: {
     sideBar: 'auto',
     sidebarDepth: 3,
-    lastUpdated: '最后更新',
+    lastUpdated: '上次更新',
+    repo: 'LBinin/blog',
     nav: [
       {
         text: '🌟博客',
@@ -41,7 +41,7 @@ module.exports = {
           { text: '工具', link: '/tools/' }
         ]
       },
-      { text: '📚阅读', link: '/book/' },
+      { text: '📚学习', link: '/learn/' },
       { text: '⛅️日记', link: '/diary/' },
       { text: '🍃项目', link: '/project/' },
       { text: '💡Todo', link: '/todo/' },
@@ -52,7 +52,7 @@ module.exports = {
       '/frontEnd/': getBlogSidebar('前端'),
       '/backEnd/': getBlogSidebar('后端'),
       '/tools/': getBlogSidebar('工具'),
-      '/book/': getBlogSidebar('阅读'),
+      '/learn/': getBlogSidebar('学习'),
       '/diary/': getBlogSidebar('日记'),
       '/note/': getBlogSidebar('杂记'),
       '/project/': getBlogSidebar('项目'),
@@ -69,13 +69,6 @@ function getBlogSidebar(type) {
     case '前端':
       return [
         ['', '欢迎'],
-        {
-          title: 'HTML',
-          // collapsable: false,
-          children: [
-            ['./HTML/Form-Submit-Vaild', 'Form 表单提交方式、验证'],
-          ]
-        },
         {
           title: 'JavaScript',
           // collapsable: false,
@@ -104,13 +97,25 @@ function getBlogSidebar(type) {
           // collapsable: false,
         },
         {
+          title: 'HTML',
+          // collapsable: false,
+          children: [
+            ['./HTML/Form-Submit-Vaild', 'Form 表单提交方式、验证'],
+          ]
+        },
+        {
+          title: 'CSS',
+          children: [
+            ['./CSS/utils', 'CSS 工具库'],
+          ]
+        },
+        {
           title: '基础知识',
           children: [
             ['./base/HTML5-New-Tags', 'HTML5 新标签'],
             ['./base/Repaint-Reflow', '重绘与回流'],
             ['./base/Regular-Expression', '正则表达式基础'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
-            ['./base/Sorting-Algorithm', '排序算法'],
           ]
           // collapsable: false,
         },
@@ -138,10 +143,12 @@ function getBlogSidebar(type) {
         //   title: '设计模式',
         //   // collapsable: false,
         // },
-        // {
-        //   title: '算法',
-        //   // collapsable: false,
-        // },
+        {
+          title: '算法',
+          children: [
+            ['./base/Sorting-Algorithm', '排序算法'],
+          ]
+        },
       ]
 
     case '后端':
@@ -164,9 +171,22 @@ function getBlogSidebar(type) {
         }
       ]
 
-    case '阅读':
+    case '学习':
       return [
-        '使用webpack定制前端开发环境'
+        ['', '学无止境'],
+        {
+          title: 'TypeScript',
+          children: [
+            ['./typescript/introduction', 'TS 简介'],
+            ['./typescript/base', 'TS 基础'],
+          ]
+        },
+        {
+          title: '掘金',
+          children: [
+            ['./juejin/webpack', '使用 webpack 定制前端开发环境']
+          ]
+        }
       ]
 
     case '日记':
