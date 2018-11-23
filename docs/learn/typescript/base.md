@@ -624,3 +624,65 @@ jQuery('#foo')
 // jQuery.d.ts
 declare var jQuery: (string) => any
 ```
+
+## 内置对象
+
+> 内置对象是指根据标准在全局作用域（Global）上存在的对象。这里的标准是指 ECMAScript 和其他环境（比如 DOM）的标准。
+
+JavaScript 内置了很多对象，它们可以直接在 TypeScript 中当做定义好的类型。定义在这：[TypeScript 核心库的定义文件](https://github.com/Microsoft/TypeScript/tree/master/src/lib)
+
+### ECMAScript 的内置对象
+
+ECMAScript 标准提供的内置对象有：
+
+`Boolean`、`Error`、`Date`、`RegExp` 等。
+
+我们可以在 TypeScript 中将变量定义为这些类型：
+
+```ts
+let b: Boolean = new Boolean(1)
+let e: Error = new Error('Error occurred')
+let d: Date = new Date()
+let r: RegExp = /[a-z]/
+```
+
+### DOM 和 BOM 的内置对象
+
+DOM 和 BOM 提供的内置对象有：
+
+`Document`、`HTMLElement`、`Event`、`NodeList` 等。
+
+TypeScript 中会经常用到这些类型：
+
+```ts
+let body: HTMLElement = document.body;
+let allDiv: NodeList = document.querySelectorAll('div');
+document.addEventListener('click', function(e: MouseEvent) {
+  // Do something
+});
+```
+
+### TypeScript 核心库的定义文件
+
+[TypeScript 核心库的定义文件](https://github.com/Microsoft/TypeScript/tree/master/src/lib)中定义了所有浏览器环境需要用到的类型，并且是预置在 TypeScript 中的。
+
+当你在使用一些常用的方法的时候，TypeScript 实际上已经帮你做了很多类型判断的工作了，比如：
+
+```ts
+Math.pow(10, '2');
+
+// index.ts(1,14): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+上面的例子中，`Math.pow` 必须接受两个 `number` 类型的参数。事实上 `Math.pow` 的类型定义如下：
+
+```ts
+interface Math {
+    /**
+     * Returns the value of a base expression taken to a specified power.
+     * @param x The base value of the expression.
+     * @param y The exponent value of the expression.
+     */
+    pow(x: number, y: number): number;
+}
+```
