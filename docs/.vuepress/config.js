@@ -192,6 +192,12 @@ function getBlogSidebar(type) {
     case '日记':
       return [
         {
+          title: '旅行',
+          children: [
+            ['./travel/shanghai/', '🚆 上海'],
+          ]
+        },
+        {
           title: '日常',
         },
         {
@@ -213,7 +219,7 @@ function getBlogSidebar(type) {
       return [
         ['./jianshu', 'XXX']
       ]
-      
+
 
     case '杂记':
       return [
