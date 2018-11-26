@@ -179,6 +179,7 @@ function getBlogSidebar(type) {
           children: [
             ['./typescript/introduction', 'TS 简介'],
             ['./typescript/base', 'TS 基础'],
+            ['./typescript/advance', 'TS 进阶'],
           ]
         },
         {

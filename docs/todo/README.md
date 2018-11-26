@@ -10,7 +10,7 @@ sidebar: auto
 - [x] 柯里化 Curry
 - [ ] 正则
 - [ ] 函数式编程
-- [ ] 重绘和回流及优化
+- [ ] 重绘和回流及优化 https://juejin.im/entry/595b5c135188250d7767f7d3
 - [ ] 可用性、可访问性、可维护性
 - [ ] LocalStorage、SessionStorage、Cookie、IndexedDB
 - [ ] JS 高阶函数
