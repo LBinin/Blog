@@ -1,4 +1,4 @@
-import { Rate, Badge } from 'element-ui'
+import { Rate, Badge, Button } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 export default ({
@@ -10,4 +10,5 @@ export default ({
   // ...做一些其他的应用级别的优化
   Vue.use(Rate)
   Vue.use(Badge)
+  Vue.use(Button)
 }

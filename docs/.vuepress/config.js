@@ -21,7 +21,7 @@ module.exports = {
   },
   head: [
     // ['link', { rel: 'icon', href: `/logo.png` }],
-    ['link', { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_906851_6z9hfzsplkm.css' }],
+    ['link', { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_906851_perbidcu3te.css' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],

@@ -2,7 +2,7 @@
 
 ## 吃
 
-### 鹿角巷 <el-rate value="4" disabled show-score text-color="#ff9900" score-template="4.0"/>
+### 鹿角巷 <el-rate :value="4" disabled show-score text-color="#ff9900" score-template="4.0"/>
 
 📍 环球港：月星环球港 B1 层 B1015（屈臣氏对面）[高德地图](http://f.amap.com/5jfzO_0985CJb)
 
@@ -12,7 +12,7 @@
 
 ---
 
-### 奈雪の茶 <el-rate value="4.5" disabled show-score text-color="#ff9900" score-template="4.5"/>
+### 奈雪の茶 <el-rate :value="4.5" disabled show-score text-color="#ff9900" score-template="4.5"/>
 
 📍 人民广场：人民广场站 19 号出口，第一百货商店 [高德地图](http://f.amap.com/2eVaS_07E6bjU)
 
@@ -25,7 +25,7 @@
 
 ---
 
-### 星巴克臻选烘焙工坊 <el-rate value="3.5" disabled show-score text-color="#ff9900" score-template="3.5"/>
+### 星巴克臻选烘焙工坊 <el-rate :value="3.5" disabled show-score text-color="#ff9900" score-template="3.5"/>
 
 南京西路：南京西路 789 号
 
@@ -88,6 +88,8 @@
     近铁城市广场三楼，地道「杭帮菜」
 
     东坡肉、吮指鸡爪
+
+<export-image-btn/>
 
 <style lang="scss">
 .el-rate {

@@ -319,7 +319,7 @@ let tom: Person = {
 //       Type 'number' is not assignable to type 'string'.
 ```
 
-上面因为 `age` 的属性值类型是 `number` 属性，不是**任意属性**属性值的类型 `string` 的子属性，所以报错。
+上面因为 `age` 的属性值类型是 `number` 属性，不是**任意属性** `[propName: string]` 属性值的类型 `string` 的子属性，所以报错。
 
 ### 只读属性
 
