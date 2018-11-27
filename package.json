@@ -33,5 +33,7 @@
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "element-ui": "^2.4.11"
+  }
 }
