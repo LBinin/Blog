@@ -3,15 +3,22 @@
     <button
       class="export-image-btn"
       @click="generateImage"
-    >导出当前文章为图片</button>
+      :disabled="loading"
+    >
+      <i v-if="loading" class="el-icon-loading"></i>
+      {{label}}
+    </button>
     <div
       v-show="showResult"
       class="export-image-result-wrapper"
     >
       <div
-        ref="exportImagesResult" 
+        ref="exportImagesResult"
         class="export-image-result"
       />
+      <div class="export-image-result__tooltip">
+        <span>👇🏻 长按或右键保存图片</span>
+      </div>
       <button class="export-image-result__close-btn" @click="closeView">
         <i class="iconfont icon-guanbi"></i>
       </button>
@@ -26,6 +33,10 @@ import html2canvas from 'html2canvas'
 
 export default {
   props: {
+    label: {
+      type: String,
+      default: '导出当前文章为图片'
+    },
     selector: {
       type: String,
       default: '.content'
@@ -42,6 +53,7 @@ export default {
       onclone: (doc) => {
         const el = doc.querySelector(this.selector)
         el.style.width = "400px"
+        el.style.paddingBottom = "50px"
       },
       ignoreElements: (el) => {
         if (el.classList.contains("export-image-btn-wrapper")) {
@@ -64,6 +76,14 @@ export default {
       html2canvas(el, options).then((canvas) => {
         this.showResult = true
         this.$refs.exportImagesResult.innerHTML = ""
+        const canvasWidth = parseInt(canvas.style.width)
+        console.log(window.innerWidth, canvasWidth)
+        if (window.innerWidth - 10 <= canvasWidth) {
+          const targetWidth = window.innerWidth * 0.8
+          const ratio = targetWidth / canvasWidth
+          console.log(ratio)
+          canvas.style.zoom = ratio
+        }
         this.$refs.exportImagesResult.appendChild(canvas)
         this.loading = false
       });
@@ -98,6 +118,11 @@ export default {
     border: none;
     cursor: pointer;
 
+    &:disabled {
+      opacity: .7;
+      cursor: not-allowed;
+    }
+
     &:focus {
       outline: none;
     }
@@ -127,16 +152,51 @@ export default {
     .export-image-result {
       height: 100%;
       width: 100%;
-      overflow: auto;
       text-align: center;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 90px;
+      box-sizing: border-box;
+      z-index: 2;
 
       canvas {
+        margin: 20px 0 110px;
         border-radius: 5px;
-        margin: 20px 0 90px;
         display: inline-block;
         box-shadow: 0 5px 20px rgba($color: #000000, $alpha: 0.3);
         // transform: scale(0.5)
         // zoom: 0.5;
+      }
+    }
+
+    .export-image-result__tooltip {
+      position: absolute;
+      border-radius: 10px;
+      top: 20px;
+      box-shadow: 0 5px 15px rgba($color: #000000, $alpha: 0.2);
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+
+      span {
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 10px;
+        z-index: 2;
+        background: #fff;
+        padding: 0.6em 1.5em;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        bottom: -10px;
+        background: #fff;
+        transform: rotate(45deg);
+        box-shadow: 0 5px 15px rgba($color: #000000, $alpha: 0.2);
       }
     }
 
@@ -148,10 +208,11 @@ export default {
       color: #3eaf7c;
       cursor: pointer;
       padding: 0;
+      z-index: 3;
 
       i {
         opacity: .9;
-        font-size: 50px;
+        font-size: 45px;
       }
     }
   }
