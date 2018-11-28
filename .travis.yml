@@ -7,5 +7,6 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa_blog
 - echo -e "Host 139.129.24.219\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+after_success:
 # 没有修改过端口的，可以用这个，上传目录要加 -r 参数
 - scp -o stricthostkeychecking=no -r /usr/local/nginx/html/blog.lbinin.com root@lbinin.com
