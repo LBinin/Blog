@@ -48,7 +48,6 @@ export default {
   mounted() {
     this.options = {
       logging: false,
-      scale: null,
       onclone: (doc) => {
         const el = doc.querySelector(this.selector)
         el.style.width = "400px"
@@ -59,6 +58,10 @@ export default {
           return true
         }
       }
+    }
+
+    if (this.scale) {
+      Object.assign(this.options, {scale: this.scale})
     }
   },
   data() {
