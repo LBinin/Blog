@@ -6,15 +6,16 @@ sidebar: auto
 
 ## 博客
 
-- [ ] 排序算法
-- [x] 柯里化 Curry
+- [x] 柯里化 Curry <el-tag size="mini" type="success">完成</el-tag>
+- [ ] 排序算法 <el-tag size="mini">进行中</el-tag>
+- [ ] 重绘和回流及优化 [Link](https://juejin.im/entry/595b5c135188250d7767f7d3) <el-tag size="mini">进行中</el-tag>
+- [ ] import、require、export、module.exports 混合使用详解 [Link](http://imweb.io/topic/582293894067ce9726778be9) <el-tag size="mini">进行中</el-tag>
+- [ ] [Page Lifecycle API](http://www.ruanyifeng.com/blog/2018/10/page_visibility_api.html)、[Page Visibility API](http://www.ruanyifeng.com/blog/2018/10/page_visibility_api.html)
 - [ ] 正则
 - [ ] 函数式编程
-- [ ] 重绘和回流及优化 https://juejin.im/entry/595b5c135188250d7767f7d3
 - [ ] 可用性、可访问性、可维护性
 - [ ] LocalStorage、SessionStorage、Cookie、IndexedDB
 - [ ] JS 高阶函数
-- [ ] import、require、export、module.exports 混合使用详解(http://imweb.io/topic/582293894067ce9726778be9)
 - [ ] 「空格之神」插件源码分析
 - [ ] `word-break` 和 `white-space` 用法与区别
 - [ ] 一篇关于 CSS Loading 的「哲学」[83 CSS Loaders](https://freefrontend.com/css-loaders/)

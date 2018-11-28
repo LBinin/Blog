@@ -3,6 +3,7 @@
 module.exports = {
   title: 'Bigno',
   description: '🤟🏻',
+  base: 'https://blog.lbinin.com/',
   serviceWorker: true,
   contentLoading: true,
   configureWebpack: {
@@ -132,6 +133,7 @@ function getBlogSidebar(type) {
           children: [
             ['./Git/Personal-Work', '个人工作常用 Git 操作'],
             ['./Git/Merge-Rebase', 'merge 和 rebase 区别'],
+            ['./Git/Travis-CI', '使用 Travis CI 实现 GitHub + Serve 自动部署'],
           ]
         },
         {
@@ -146,7 +148,7 @@ function getBlogSidebar(type) {
         {
           title: '算法',
           children: [
-            ['./base/Sorting-Algorithm', '排序算法'],
+            ['./algorithm/Sorting-Algorithm', '排序算法'],
           ]
         },
       ]
