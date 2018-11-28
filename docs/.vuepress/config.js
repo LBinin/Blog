@@ -3,7 +3,6 @@
 module.exports = {
   title: 'Bigno',
   description: '🤟🏻',
-  base: 'https://blog.lbinin.com/',
   serviceWorker: true,
   contentLoading: true,
   configureWebpack: {
