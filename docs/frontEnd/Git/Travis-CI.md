@@ -26,6 +26,8 @@ Commit all changes to your .travis.yml.
 ## 参考资料
 > [持续集成服务 Travis CI 教程 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)
 > 
+> [通过travis部署代码到远程服务器 - 我仅仅是一个Coder - CSDN博客](https://blog.csdn.net/qq8427003/article/details/64921238)
+> 
 > [Travis-CI 自动化测试并部署至自己的 CentOS 服务器 - 掘金](https://juejin.im/post/5a9e1a5751882555712bd8e1)
 > 
 > [开箱即用，Hexo 博客的 github + server 自动部署 - 掘金](https://juejin.im/post/5b0a4a8ff265da0de1011f9d)

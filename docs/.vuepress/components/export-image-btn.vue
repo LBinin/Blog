@@ -30,7 +30,6 @@
 import html2canvas from 'html2canvas'
 
 // TODO: 生成手机、PC 样式
-
 export default {
   props: {
     label: {
@@ -43,13 +42,13 @@ export default {
     },
     scale: {
       type: Number,
-      default: window.devicePixelRatio
+      default: null
     }
   },
   mounted() {
     this.options = {
       logging: false,
-      scale: this.scale,
+      scale: null,
       onclone: (doc) => {
         const el = doc.querySelector(this.selector)
         el.style.width = "400px"
