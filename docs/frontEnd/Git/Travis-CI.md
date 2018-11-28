@@ -22,6 +22,20 @@ Make sure to add id_rsa_blog.enc to the git repository.
 Make sure not to add /Users/bigno/.ssh/id_rsa_blog to the git repository.
 Commit all changes to your .travis.yml.
 ```
+
+## Travis 使用 SSH 免密登陆服务器
+
+```bash
+$ cd docs/.vuepress/dist
+$ scp -o stricthostkeychecking=no -r ./* root@lbinin.com:/usr/local/nginx/html/blog.lbinin.com
+Warning: Permanently added 'lbinin.com,139.129.24.219' (ECDSA) to the list of known hosts.
+root@lbinin.com's password: 
+
+No output has been received in the last 10m0s, this potentially indicates a stalled build or something wrong with the build itself.
+Check the details on how to adjust your build configuration on: https://docs.travis-ci.com/user/common-build-problems/#Build-times-out-because-no-output-was-received
+
+The build has been terminated
+```
  
 ## 参考资料
 > [持续集成服务 Travis CI 教程 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html)

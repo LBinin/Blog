@@ -1,20 +1,18 @@
 language: node_js
 node_js:
-  - '10'
+- '10'
 before_install:
-  - openssl aes-256-cbc -K $encrypted_a2c824ace89e_key -iv $encrypted_a2c824ace89e_iv
-    -in id_rsa_blog.enc -out ~/.ssh/id_rsa_blog -d
-  - chmod 600 ~/.ssh/id_rsa_blog
-  - echo -e "Host 139.129.24.219\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - yarn global add vuepress
-
+- openssl aes-256-cbc -K $encrypted_a2c824ace89e_key -iv $encrypted_a2c824ace89e_iv
+  -in id_rsa_blog.enc -out ~/.ssh/id_rsa_blog -d
+- chmod 600 ~/.ssh/id_rsa_blog
+- echo -e "Host 139.129.24.219\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/id_rsa_blog" >> ~/.ssh/config
+- yarn global add vuepress
+addons:
+  ssh_known_hosts: 139.129.24.219
 install:
-  - yarn install
-
+- yarn install
 script:
-  - yarn docs:build
-
+- yarn docs:build
 after_success:
-  - cd docs/.vuepress/dist
-  # 没有修改过端口的，可以用这个，上传目录要加 -r 参数
-  - scp -o stricthostkeychecking=no -r ./* root@lbinin.com:/usr/local/nginx/html/blog.lbinin.com
+- cd docs/.vuepress/dist
+- scp -o stricthostkeychecking=no -r ./* root@lbinin.com:/usr/local/nginx/html/blog.lbinin.com
