@@ -42,10 +42,9 @@ module.exports = {
         ]
       },
       { text: '📚学习', link: '/learn/' },
-      { text: '⛅️日记', link: '/diary/' },
+      { text: '✍🏻手记', link: '/words/' },
       { text: '🍃项目', link: '/project/' },
       { text: '💡Todo', link: '/todo/' },
-      { text: '🍳杂记', link: '/note/' },
       { text: '👨🏻‍💻关于', link: '/about/' },
     ],
     sidebar: {
@@ -53,8 +52,7 @@ module.exports = {
       '/backEnd/': getBlogSidebar('后端'),
       '/tools/': getBlogSidebar('工具'),
       '/learn/': getBlogSidebar('学习'),
-      '/diary/': getBlogSidebar('日记'),
-      '/note/': getBlogSidebar('杂记'),
+      '/words/': getBlogSidebar('手记'),
       '/project/': getBlogSidebar('项目'),
     },
   },
@@ -70,8 +68,8 @@ function getBlogSidebar(type) {
       return [
         ['', '欢迎'],
         {
-          title: 'JavaScript',
           // collapsable: false,
+          title: 'JavaScript',
           children: [
             ['./JavaScript/JS-Array', 'Js 数组'],
             ['./JavaScript/JS-HOF', 'Js 高阶函数'],
@@ -86,7 +84,6 @@ function getBlogSidebar(type) {
         },
         {
           title: 'React',
-          // collapsable: false,
           children: [
             ['./React/React-HOC', 'React 高阶组件 HOC'],
             ['./React/React-Lifecycle', 'React 生命周期'],
@@ -94,11 +91,9 @@ function getBlogSidebar(type) {
         },
         {
           title: 'Vue',
-          // collapsable: false,
         },
         {
           title: 'HTML',
-          // collapsable: false,
           children: [
             ['./HTML/Form-Submit-Vaild', 'Form 表单提交方式、验证'],
           ]
@@ -117,11 +112,9 @@ function getBlogSidebar(type) {
             ['./base/Regular-Expression', '正则表达式基础'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
           ]
-          // collapsable: false,
         },
         {
           title: '网络协议',
-          // collapsable: false,
           children: [
             ['./network-protocol/CDN', '初探 CDN'],
             ['./network-protocol/DNS', '深入理解 DNS'],
@@ -140,14 +133,15 @@ function getBlogSidebar(type) {
           children: [
           ]
         },
-        // {
-        //   title: '设计模式',
-        //   // collapsable: false,
-        // },
         {
           title: '算法',
           children: [
             ['./algorithm/Sorting-Algorithm', '排序算法'],
+          ]
+        },
+        {
+          title: '设计模式',
+          children: [
           ]
         },
       ]
@@ -191,19 +185,20 @@ function getBlogSidebar(type) {
         }
       ]
 
-    case '日记':
+    case '手记':
       return [
+        ['', '手记'],
         {
-          title: '旅行',
+          title: '✈️旅行',
           children: [
             ['./travel/shanghai/', '🚆 上海'],
           ]
         },
         {
-          title: '日常',
+          title: '⛅️日常',
         },
         {
-          title: '工作',
+          title: '🖥工作',
           children: [
             ['./work/2018.11.21', '2018.11.21 Chart.js Resize 探究'],
             ['./work/2018.11.19', '2018.11.19 模块化探究'],
@@ -214,20 +209,19 @@ function getBlogSidebar(type) {
             ['./work/2018.07.19', '2018.07.19 react-router 默认路由'],
             ['./work/2018.07.10', '2018.07.10 React Unmount 注意点'],
           ]
+        },
+        {
+          title: '🍳杂记',
+          children: [
+            ['./note/Hope', '愿'],
+            ['./note/If-You-Love-Me', '如果你爱我'],
+          ]
         }
       ]
 
     case '项目':
       return [
         ['./jianshu', 'XXX']
-      ]
-
-
-    case '杂记':
-      return [
-        ['', '杂记'],
-        ['Hope', '愿'],
-        ['If-You-Love-Me', '如果你爱我'],
       ]
   }
 }
