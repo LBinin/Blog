@@ -44,9 +44,8 @@
 </template>
 
 <script>
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas"
 
-// TODO: 生成手机、PC 样式
 export default {
   props: {
     label: {
