@@ -97,14 +97,14 @@ export default {
         this.imageSrc = canvas.toDataURL("image/jpeg");
         this.loading = false;
         this.showResult = true;
+        setTimeout(() => {
+          this.$refs.exportImagesResult.scrollTo(0, 0);
+        }, 0);
       });
     },
 
     closeView() {
       this.showResult = false;
-      setTimeout(() => {
-        this.$refs.exportImagesResult.scrollTo(0, 0);
-      }, 0);
     }
   },
   computed: {
