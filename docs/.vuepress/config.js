@@ -3,7 +3,12 @@
 module.exports = {
   title: 'Bigno',
   description: '🤟🏻',
-  serviceWorker: true,
+  serviceWorker: {
+    updatePopup: {
+      message: "有新的内容更新啦~点击下方按钮更新",
+      buttonText: "遭遇！野生的博客之神！"
+    }
+  },
   contentLoading: true,
   configureWebpack: {
     resolve: {
