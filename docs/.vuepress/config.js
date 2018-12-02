@@ -196,7 +196,7 @@ function getBlogSidebar(type) {
         {
           title: '✈️旅行',
           children: [
-            ['./travel/shanghai/', '🚆 上海'],
+            ['./travel/shanghai', '🚆 上海'],
           ]
         },
         {
