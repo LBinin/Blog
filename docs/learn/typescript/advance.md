@@ -190,22 +190,62 @@ var Days;
 })(Days || (Days = {}));
 ```
 
+### 常数项和计算所得项
 
+枚举项有两种类型：**常数项**（constant member）和**计算所得项**（computed member）。
 
-### Never
+- 计算所得项：顾名思义，根据计算得出的值赋给枚举项。如：
 
-当函数必须存在无法达到的终点的时候使用：
+    ```ts
+    enum Color {Red, Green, Blue = "blue".length}
+    ```
+
+- 常数项：之前的例子都是常数项，即不需要通过计算得出的值，直接赋给枚举项的值。
+
+<details>
+
+<summary><strong>当满足以下条件时，枚举成员被当作是常数</strong></summary>
+
+- 不具有初始化函数并且之前的枚举成员是常数。在这种情况下，当前枚举成员的值为上一个枚举成员的值加 1。但第一个枚举元素是个例外。如果它没有初始化方法，那么它的初始值为 0。
+
+- 枚举成员使用常数枚举表达式初始化。常数枚举表达式是 TypeScript 表达式的子集，它可以在编译阶段求值。当一个表达式满足下面条件之一时，它就是一个常数枚举表达式：
+数字字面量
+    - 引用之前定义的常数枚举成员（可以是在不同的枚举类型中定义的）如果这个成员是在同一个枚举类型中定义的，可以使用非限定名来引用
+    - 带括号的常数枚举表达式
+    - +, -, ~ 一元运算符应用于常数枚举表达式
+    - +, -, *, /, %, <<, >>, >>>, &, |, ^ 二元运算符，常数枚举表达式做为其一个操作对象。若常数枚举表达式求值后为NaN或Infinity，则会在编译阶段报错
+
+</details>
+
+### 常数枚举
+
+「常数枚举」是使用 `const` 关键字定义的枚举类型。
+
+与普通枚举类型的区别就是：**它会在编译阶段被删除**，并且不能包含计算成员。
 
 ```ts
-// 返回never的函数必须存在无法达到的终点
-function error(message: string): never {
-    throw new Error(message)
+const enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
 }
 
-// 返回never的函数必须存在无法达到的终点
-function infiniteLoop(): never {
-    while (true) {
-        /* code */
-    }
-}
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+
+const enum Color {Red, Green, Blue = "blue".length} // 报错，不允许包含计算成员
 ```
+
+编译结果：
+
+```ts
+var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */]
+```
+
+### 外部枚举
+
+「外部枚举」（Ambient Enums）是使用 `declare` 关键字定义的枚举类型。
+
+外部枚举与声明语句一样，常出现在声明文件中。
+
+同时使用 `declare` 和 `const` 关键字定义也是可以的。
