@@ -43,7 +43,8 @@ module.exports = {
           { text: '导航', link: '/archives/' },
           { text: '前端', link: '/frontEnd/' },
           { text: '后端', link: '/backEnd/' },
-          { text: '工具', link: '/tools/' }
+          { text: '工具', link: '/tools/' },
+          { text: '兴趣', link: '/interest/' },
         ]
       },
       { text: '📚学习', link: '/learn/' },
@@ -56,6 +57,7 @@ module.exports = {
       '/frontEnd/': getBlogSidebar('前端'),
       '/backEnd/': getBlogSidebar('后端'),
       '/tools/': getBlogSidebar('工具'),
+      '/interest/': getBlogSidebar('兴趣'),
       '/learn/': getBlogSidebar('学习'),
       '/words/': getBlogSidebar('手记'),
       '/project/': getBlogSidebar('项目'),
@@ -169,6 +171,19 @@ function getBlogSidebar(type) {
             ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
           ]
         }
+      ]
+
+    case '兴趣':
+      return [
+        // ['', '兴趣导航'],
+        ['./USB', 'USB 各版本区别及基本知识'],
+        // {
+        //   title: 'Mac',
+        //   children: [
+        //     ['./Mac/brew', 'Homebrew - Mac 下的包管理工具'],
+        //     ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
+        //   ]
+        // }
       ]
 
     case '学习':
