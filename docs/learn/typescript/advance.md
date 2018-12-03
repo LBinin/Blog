@@ -249,3 +249,332 @@ var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */]
 外部枚举与声明语句一样，常出现在声明文件中。
 
 同时使用 `declare` 和 `const` 关键字定义也是可以的。
+
+## 类
+
+ES6 中对类的定义这里也不再赘述了。
+
+需要注意的是，ES7 中有一些关于类的提案，TypeScript 中实现了他们，在这里做一个归档。
+
+### 实例属性
+
+众所周知，ES6 中实例的属性只能通过 `this.xxx = xxx` 来定义，在 ES7 的提案中可以直接在类里面定义：
+
+```ts
+class Animal {
+    name = 'Jack';
+
+    constructor() {
+        // ...
+    }
+}
+
+let a = new Animal();
+console.log(a.name); // Jack
+```
+
+### 静态属性
+
+在 ES7 的提案中可以定义一个「静态属性」：
+
+```ts
+class Animal {
+    static num = 42;
+
+    constructor() {
+        // ...
+    }
+}
+
+console.log(Animal.num); // 42
+```
+
+### 修饰符
+
+TypeScript 可以使用三种访问修饰符（Access Modifiers），分别是 `public`、`private` 和 `protected`。
+
+- `public` 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 `public` 的
+- `private` 修饰的属性或方法是私有的，不能在声明它的类的外部访问
+- `protected` 修饰的属性或方法是受保护的，它和 `private` 类似，区别是它在子类中也是允许被访问的
+
+需要注意的是，TypeScript 编译之后的代码中，并没有限制 `private` 属性在外部的可访问性。
+
+### 抽象类
+
+需要注意的是，即使是抽象方法，TypeScript 的编译结果中，仍然会存在这个抽象类。
+
+1. 抽象类是不允许被实例化的：
+
+    ```ts
+    abstract class Animal {
+        public name;
+        public constructor(name) {
+            this.name = name;
+        }
+        public abstract sayHi();
+    }
+
+    let a = new Animal('Jack'); // 这里实例化了一个抽象类，报错
+
+    // index.ts(9,11): error TS2511: Cannot create an instance of the abstract class 'Animal'.
+    ```
+
+2. 抽象类中的抽象方法必须被子类实现：
+
+    ```ts
+    abstract class Animal {
+        public name;
+        public constructor(name) {
+            this.name = name;
+        }
+        public abstract sayHi();
+    }
+
+    class Cat extends Animal {
+        public eat() {
+            console.log(`${this.name} is eating.`);
+        }
+        // 这里没有实现父类的抽象方法
+    }
+
+    let cat = new Cat('Tom');
+
+    // index.ts(9,7): error TS2515: Non-abstract class 'Cat' does not implement inherited abstract member 'sayHi' from class 'Animal'.
+    ```
+
+### 类实现接口
+
+一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成「接口」（interfaces），用 `implements` 关键字来实现。这个特性大大提高了面向对象的灵活性。
+
+```ts
+// 定义一个报警的接口
+interface Alarm {
+    alert();
+}
+
+// 定义一个灯的接口
+interface Light {
+    lightOn();
+    lightOff();
+}
+
+class Door {
+}
+
+class SecurityDoor extends Door implements Alarm {
+    alert() {
+        console.log('SecurityDoor alert');
+    }
+}
+
+// 一个类可以实现多个接口
+class Car implements Alarm, Light {
+    alert() {
+        console.log('Car alert');
+    }
+    lightOn() {
+        console.log('Car light on');
+    }
+    lightOff() {
+        console.log('Car light off');
+    }
+}
+```
+
+### 接口继承接口
+
+接口和接口之间也是可以继承的：
+
+```ts
+class Point {
+    x: number;
+    y: number;
+}
+
+interface Point3d extends Point {
+    z: number;
+}
+
+let point3d: Point3d = {x: 1, y: 2, z: 3};
+```
+
+## 泛型
+
+> 泛型（Generics）是指在定义函数、接口或类的时候，不预先指定**具体的类型**，而在使用的时候再指定类型的一种特性。
+
+举个例子，我们想实现一个函数 `createArray`，它可以创建一个指定长度的数组，同时将每一项都填充一个默认值：
+
+```ts
+function createArray(length: number, value: any): Array<any> {
+    let result = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+虽然功能实现了，但是我们使用了 `any` 关键字来定义的类型，和我们最开始的想法 ——「数组中每一项都应该是输入的 `value` 的类型」有些出入。
+
+这时候，「泛型」闪亮登场 ✨
+
+```ts
+function createArray<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray<string>(3, 'x'); // ['x', 'x', 'x']
+```
+
+我们可以看到，如果需要定义一个泛型，我们需要：
+
+**在函数名后面加上 `<T>`**（与其说是函数名后，不如说是**参数括号前**，方便后面 [泛型接口](#泛型接口)理解），其中 `T` 表示之后的**任意**的类型。比如 `value: T` 可以指定传参的类型；`Array<T>` 表示返回值的数组的类型。
+
+这样，在调用的时候，TypeScript 会通过 [基础 · 类型推论](./base.html#类型推论) 自动推算出来。
+
+### 多个泛型参数
+
+定义泛型的时候，可以一次定义多个类型参数。
+
+比如：定义一个 `swap` 函数，用来交换输入的元组。
+
+```ts
+function swap<T, U>(tuple: [T, U]): [U, T] {
+    return [tuple[1], tuple[0]];
+}
+
+swap([7, 'seven']); // ['seven', 7]
+```
+
+### 泛型约束
+
+定义了一个泛型之后，由于函数内部不知道参数的类型，我们无法随意操作它的属性和方法：
+
+```ts
+function loggingIdentity<T>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+// index.ts(2,19): error TS2339: Property 'length' does not exist on type 'T'.
+```
+
+这时候，我们需要做一个约束 ——「只允许那些拥有 `length` 属性的变量传进函数」。这个约束就叫做**泛型约束**。
+
+那么怎么约定一个「泛型约束」呢？
+
+之前我们都是用「接口」来规定一个东西的形状，当然，我们也能定义泛型的内容：
+
+```ts
+interface Lengthwise {
+    length: number;
+}
+
+// 我们使用 extends 关键字进行泛型约束
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    // 这时候传入的参数必须包含 length 属性
+    // 如果传入的 arg 不包含 length，那么在编译阶段就会报错了
+    console.log(arg.length);
+    return arg;
+}
+```
+
+### 参数相互约束
+
+多个类型参数之间也可以互相约束（使用 `extends` 关键字）：
+
+我们写一个函数，需要将 `source` 上的属性赋到 `target` 上，但是 `source` 上可能会出现奇怪的、`target` 不需要的属性，这时候，我们就可以使用泛型参数之间的相互约束，来约束 `source` 不会出现 `target` 不需要的属性。（换句话说，就是 `source` 上的属性，`target` 全都要有，`source` 是 `target` 的子集）
+
+```ts
+function copyFields<T extends U, U>(target: T, source: U): T {
+    for (let id in source) {
+        target[id] = (<T>source)[id];
+    }
+    return target;
+}
+
+let x = { a: 1, b: 2, c: 3, d: 4 };
+
+copyFields(x, { b: 10, d: 20 });
+```
+
+上面代码中，使用了两个类型参数，其中要求 `T` 继承 `U`，这样就保证了 `source: U` 上不会出现 `target: T` 中不存在的字段。
+
+### 泛型接口
+
+我们之前说过，可以用接口来定义一个函数的形状 [用接口定义函数的类型](./base.html#用接口定义函数的类型)，当然也可以用包含泛型的接口来定义函数的形状：
+
+```ts
+interface CreateArrayFunc {
+    <T>(length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+或者，把泛型参数提前到接口名上：
+
+```ts
+// 在接口名后跟上 `<T>`
+interface CreateArrayFunc<T> {
+    (length: number, value: T): Array<T>;
+}
+
+// 使用的时候需要声明泛型的类型
+let createArray: CreateArrayFunc<any>;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+### 泛型类
+
+与泛型接口类似，泛型也可以用于类的类型定义中：
+
+```ts
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+```
+
+### 泛型参数的默认类型
+
+在 TypeScript 2.3 以后，我们可以为泛型中的类型参数指定**默认类型**。
+
+> 当使用泛型时**没有在代码中直接指定类型参数**，从**实际值参数中也无法推测出**时，这个默认类型就会起作用。
+
+```ts
+function createArray<T = string>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+```
