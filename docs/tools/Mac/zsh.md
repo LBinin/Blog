@@ -65,6 +65,19 @@ $ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools
 take hello # 等于 mkdir -p hello && cd hello
 ```
 
+## 自定义命令别名
+
+在 `~/.zshrc` 文件下添加如下格式：
+
+```bash
+alias ns="npm start"
+alias ys="yarn start"
+```
+
+保存后记得 `source ~/.zshrc` 即可使用~
+
+你可以使用 `alias` 查看当前所有别名列表。
+
 ## 插件
 
 官方插件集合：[Plugins · wiki](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins)
