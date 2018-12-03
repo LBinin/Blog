@@ -578,3 +578,66 @@ function createArray<T = string>(length: number, value: T): Array<T> {
     return result;
 }
 ```
+
+## 声明合并
+
+> 如果定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型
+
+### 函数的合并
+
+见 [函数的重载](./base.html#函数重载)
+
+### 接口的合并
+
+```ts
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    weight: number;
+}
+// 相当于
+interface Alarm {
+    price: number;
+    weight: number;
+}
+
+// 不报错
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    price: number;  // 虽然重复了，但是类型都是 `number`，所以不会报错
+    weight: number;
+}
+
+// 类型不一致，报错
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    price: string;  // 类型不一致，会报错
+    weight: number;
+}
+
+// 接口中方法的合并，和函数的合并一样（重载）
+interface Alarm {
+    price: number;
+    alert(s: string): string;
+}
+interface Alarm {
+    weight: number;
+    alert(s: string, n: number): string;
+}
+// 相当于
+interface Alarm {
+    price: number;
+    weight: number;
+    alert(s: string): string;
+    alert(s: string, n: number): string;
+}
+```
+
+### 类的合并
+
+与[接口的合并](#接口的合并)规则一致。
