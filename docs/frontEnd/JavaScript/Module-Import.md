@@ -68,7 +68,7 @@ export { foo, bar }
 
     ```js
     export 42 // 报错
-    
+
     var m = 1
     export m // 错误
 
@@ -87,7 +87,24 @@ export { foo, bar }
 
 ### `require`
 
+#### 语法
 
+```js
+const fs = require('fs')
+```
+
+#### 注意点
+
+1. `require` 可以在任何地方使用，也可以直接使用其导出对象的接口。
+
+    ```js
+    require('./a')(); // a模块是一个函数，立即执行a模块函数
+    var data = require('./a').data; // a模块导出的是一个对象
+    var a = require('./a')[0]; // a模块导出的是一个数组
+    ```
+
+2. `require` 参数可以使用变量或者计算内容（因为 `require` 是运行时执行的），如：`require(process.cwd() + '/a')`
+3.
 
 ### `exports`
 
@@ -165,7 +182,7 @@ CommonJS 的一个模块，就是一个**脚本文件**。
   id: '...', // 模块名
   exports: { ... }, // 模块输出的各个接口, 也就是通过 module.exports = {...} 或者 exports['xxx'] 赋值 的内容
   loaded: true, // 表示该模块的脚本是否执行完毕
-  
+
   // ...还有很多其他属性
 }
 ```
@@ -193,7 +210,7 @@ Object.keys(require.cache).forEach(function(key) {
 里面有一段话：
 
 > CommonJs spec defines only exports. But module.exports is used by node.js and many other CommonJs implementations.
-> 
+>
 > commonjs mean pure CommonJs
 >
 > commonjs2 also includes the module.exports stuff.
@@ -202,80 +219,242 @@ Object.keys(require.cache).forEach(function(key) {
 
 ## 面试题
 
-1. **循环引用**
+### 1. 循环引用
 
-    这里有三个文件：a.js、b.js、main.js
+这里有三个文件：`a.js`、`b.js`、`main.js`
 
-    ```js
-    // a.js
-    exports.done = false
-    var b = require('./b.js')
-    console.log('在 a.js 之中，b.done = %j', b.done)
-    exports.done = true
-    console.log('a.js 执行完毕')
+```js
+// a.js
+exports.done = false
+var b = require('./b.js')
+console.log('在 a.js 之中，b.done = %j', b.done)
+exports.done = true
+console.log('a.js 执行完毕')
 
-    // b.js
-    exports.done = false
-    var a = require('./a.js')
-    console.log('在 b.js 之中，a.done = %j', a.done)
-    exports.done = true
-    console.log('b.js 执行完毕')
+// b.js
+exports.done = false
+var a = require('./a.js')
+console.log('在 b.js 之中，a.done = %j', a.done)
+exports.done = true
+console.log('b.js 执行完毕')
 
-    // main.js
-    var a = require('./a.js')
-    var b = require('./b.js')
-    console.log('在 main.js 之中, a.done = %j, b.done = %j', a.done, b.done)
-    ```
+// main.js
+var a = require('./a.js')
+var b = require('./b.js')
+console.log('在 main.js 之中, a.done = %j, b.done = %j', a.done, b.done)
+```
 
-    运行后输出结果：
+运行后输出结果：
 
-    ```bash
-    $ node main.js
+```bash
+$ node main.js
 
-    在 b.js 之中，a.done = false
-    b.js 执行完毕
-    在 a.js 之中，b.done = true
-    a.js 执行完毕
-    在 main.js 之中, a.done = true, b.done = true
-    ```
+在 b.js 之中，a.done = false
+b.js 执行完毕
+在 a.js 之中，b.done = true
+a.js 执行完毕
+在 main.js 之中, a.done = true, b.done = true
+```
 
-    咱们一步步的看：
+咱们一步步的看：
 
-    1. `require('./a.js')` 这句代码表示加载 a.js，根据「加载时执行」，a 的 `export.done` 变为了 `false`，开始加载 b.js，这时候，a.js 的代码就在 `var b = require('./b.js')` 这里停止了。
+1. `require('./a.js')` 这句代码表示加载 `a.js`，根据「加载时执行」，a 的 `export.done` 变为了 `false`，开始加载 `b.js`，这时候，`a.js` 的代码就在 `var b = require('./b.js')` 这里停止了。
 
-    2. 这时候开始加载 b.js，执行其中的代码，b 的 `export.done` 变为了 `false`，然后开始加载 a.js 的内容，这时候就发生了「循环加载」。
-
-
-    3. 这时候，系统会去 a.js 模块对应对象的 **`exports`** 属性取值。可是因为 a.js 还「没有执行完」，从 **`exports`** 属性只能取出「已经执行的部分」，而不是最后的值，也就是 `a.done = false` 这段已经被执行的语句。
+2. 这时候开始加载 `b.js`，执行其中的代码，b 的 `export.done` 变为了 `false`，然后开始加载 `a.js` 的内容，这时候就发生了「循环加载」。
 
 
-    4. 因此，对于 b.js 来说，它从 a.js 只输入一个变量 `done`，值为 `false`。然后 b.js 继续往下执行，输出内容，等到全部执行完毕，再把执行权交还给 a.js。
-    
-    5. a.js 接着往下执行，直到执行完毕。
-    
-    6. a.js 执行完毕后，执行权交还给 main.js，直到 main.js 执行完毕。
-    
-    **过程已经描述完毕，现在我们通过结果可以知道两件事情**：
+3. 这时候，系统会去 `a.js` 模块对应对象的 **`exports`** 属性取值。可是因为 `a.js` 还「没有执行完」，从 **`exports`** 属性只能取出「已经执行的部分」，而不是最后的值，也就是 `a.done = false` 这段已经被执行的语句。
 
-    1. 在 b.js 之中，a.js 没有执行完毕，只执行了第一行。
-    
-    2. main.js 执行到第二行时，不会再次执行 b.js，而是输出缓存的 b.js 的执行结果，即它的第四行 exports.done = true。
-    
-    **总结**：CommonJS 输入的是被输出值的拷贝，不是引用。
+
+4. 因此，对于 `b.js` 来说，它从 `a.js` 只输入一个变量 `done`，值为 `false`。然后 `b.js` 继续往下执行，输出内容，等到全部执行完毕，再把执行权交还给 `a.js`。
+
+5. `a.js` 接着往下执行，直到执行完毕。
+
+6. `a.js` 执行完毕后，执行权交还给 main.js，直到 main.js 执行完毕。
+
+**过程已经描述完毕，现在我们通过结果可以知道两件事情**：
+
+1. 在 `b.js` 之中，`a.js` 没有执行完毕，只执行了第一行。
+
+2. `main.js` 执行到第二行时，不会再次执行 `b.js`，而是输出缓存的 `b.js` 的执行结果，即它的第四行 `exports.done = true`。
+
+**总结**：CommonJS 输入的是被输出值的拷贝，不是引用。
 
 ---
 
-1. 为何有的地方使用 require 去引用一个模块时需要加上 default？ require('xx').default
+### 2. webpack 模块化的原理
+
+> webpack 本身维护了一套模块系统，这套模块系统兼容了所有前端历史进程下的模块规范。模块化的实现其实就在最后编译的文件内。
+
+现在有三个文件：`webpack.config.js`、`a.js`、`c.js`
+
+```js
+// webpack.config.js
+const path = require('path');
+
+module.exports = {
+  entry: './a.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  }
+};
+
+// a.js
+import a from './c';
+
+export default 'a.js';
+console.log(a);
+
+// c.js
+export default 333;
+```
+
+用 webpack 构建后，可以看到如下代码：
+
+```js
+(function(modules) {
+
+  function __webpack_require__(moduleId) {
+    var module =  {
+      i: moduleId,
+      l: false,
+      exports: {}
+    };
+    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+    return module.exports;
+  }
+
+  return __webpack_require__(0);
+
+})([
+  (function (module, __webpack_exports__, __webpack_require__) {
+
+    // 引用 模块 1，也就是 c.js
+    "use strict";
+    Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+    /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c__ = __webpack_require__(1);
+
+    /* harmony default export */ __webpack_exports__["default"] = ('a.js');
+    console.log(__WEBPACK_IMPORTED_MODULE_0__c__["a" /* default */]);
+
+  }),
+  (function (module, __webpack_exports__, __webpack_require__) {
+
+    // 输出本模块的数据
+    "use strict";
+    /* harmony default export */ __webpack_exports__["a"] = (333);
+  })
+]);
+```
+
+我们精简一下，得到：
+
+```js
+(function(modules) {
+
+})(m);
+```
+
+可以看到，这是一个「自执行函数」，其中 `m` 是一个数组，数组中的每个元素就是一个模块。我们把数组单独提取出来：
+
+```js
+var m = [
+  (function (module, __webpack_exports__, __webpack_require__) {
+
+    // a.js
+    "use strict";
+    Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+    // 引用 模块 1，也就是 c.js
+    /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c__ = __webpack_require__(1);
+
+    /* harmony default export */ __webpack_exports__["default"] = ('a.js');
+    console.log(__WEBPACK_IMPORTED_MODULE_0__c__["a" /* default */]);
+
+  }),
+  (function (module, __webpack_exports__, __webpack_require__) {
+    // c.js
+    "use strict";
+
+    // 输出本模块的数据
+    /* harmony default export */ __webpack_exports__["a"] = (333);
+  })
+]
+```
+
+可以发现，每个模块就是一个函数，这个函数接收三个参数，`module`、`__webpack_exports__`、`__webpack_require__`、
+
+- `module`：CommonJS 引入一个模块后**生成的对象信息**，包含了当前模块的 `id`、是否加载成功、暴露的所有接口等信息。
+- `__webpack_exports__`：CommonJS 中的 `module.exports` 变量。
+- `__webpack_require__`：webpack 自己**维护的模块引入函数**。
+
+回到最初的例子，在「自执行函数」内，定义了一个 **`__webpack_require__` 函数**
+
+```js
+function __webpack_require__(moduleId) {
+  var module =  {
+    i: moduleId,
+    l: false,
+    exports: {}
+  };
+  modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+  return module.exports;
+}
+```
+
+这个函数生成了一个**模块的信息对象**，调用了**对应的模块函数**，调用后，对应的 `exports` 属性上将会被**添加上模块中需要暴露的接口**，回到 **`__webpack_require__` 函数** 后会将其接口暴露出去。
+
+我们看到在定义完 `__webpack_require__` 函数后，立马返回并调用了 `id` 为 `0` 的模块，也就是前面 `m[0]` 中的函数。
+
+那么现在，我们可以来看看模块 `0` 这个函数中做了些什么：
+
+```js
+/* 编译前的 a.js */
+import a from './c';
+
+export default 'a.js';
+console.log(a);
+
+/* 编译后的 a.js */
+(function (module, __webpack_exports__, __webpack_require__) {
+  // c.js
+  "use strict";
+
+  // 向 `module.exports` 上添加 __esModule 信息告诉别人这是一个 ESModule
+  Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+  // 引用模块 1，也就是 c.js
+  /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c__ = __webpack_require__(1);
+  // 这时候 __WEBPACK_IMPORTED_MODULE_0__c__ 就是 c.js 的 `module.exports`
+
+  // 导出自己的接口内容
+  // `default` 键上是一个字符串 `a.js`
+  /* harmony default export */ __webpack_exports__["default"] = ('a.js');
+
+  // 模块内部内容
+  console.log(__WEBPACK_IMPORTED_MODULE_0__c__["a" /* default */]);
+})
+```
+
+至此，我们可以清晰的看到这个 `__webpack_require__` 函数的使命，也就是 webpack 模块化的基本原理。
+
+---
+
+### 3. 为何有的地方使用 `require` 去引用一个模块时需要加上 `default`？ `require('xx').default`
+
+---
+
 1. 经常在各大UI组件引用的文档上会看到说明 import { button } from 'xx-ui' 这样会引入所有组件内容，需要添加额外的 babel 配置，比如 babel-plugin-component？
-1. 为什么可以使用 es6 的 import 去引用 commonjs 规范定义的模块，或者反过来也可以又是为什么？
-1. 我们在浏览一些 npm 下载下来的 UI 组件模块时（比如说 element-ui 的 lib 文件下），看到的都是 webpack 编译好的 js 文件，可以使用 import 或 require 再去引用。但是我们平时编译好的 js 是无法再被其他模块 import 的，这是为什么？
-1. babel 在模块化的场景中充当了什么角色？以及 webpack ？哪个启到了关键作用？
-1. 听说 es6 还有 tree-shaking 功能，怎么才能使用这个功能？
+2. 为什么可以使用 es6 的 import 去引用 commonjs 规范定义的模块，或者反过来也可以又是为什么？
+3. 我们在浏览一些 npm 下载下来的 UI 组件模块时（比如说 element-ui 的 lib 文件下），看到的都是 webpack 编译好的 js 文件，可以使用 import 或 require 再去引用。但是我们平时编译好的 js 是无法再被其他模块 import 的，这是为什么？
+4. babel 在模块化的场景中充当了什么角色？以及 webpack ？哪个启到了关键作用？
+5. 听说 es6 还有 tree-shaking 功能，怎么才能使用这个功能？
 
 ## 参考资料
 
 > [LearnJS/Module的加载实现.md at master · LBinin/LearnJS · GitHub](https://github.com/LBinin/LearnJS/blob/master/ES6/Module%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%AE%9E%E7%8E%B0.md)
-> 
+>
 > [「前端」import、require、export、module.exports 混合详解 · Issue #39 · ShowJoy-com/showjoy-blog · GitHub](https://github.com/ShowJoy-com/showjoy-blog/issues/39)
-> 
+>
 > [Node中没搞明白require和import，你会被坑的很惨 - 腾讯Web前端 IMWeb 团队社区 | blog | 团队博客](http://imweb.io/topic/582293894067ce9726778be9)
