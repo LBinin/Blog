@@ -1,7 +1,6 @@
 // const { getBlogSidebar } = require('./menu')
 
 module.exports = {
-  lang: 'zh-CN',
   title: 'Bigno',
   description: '🤟🏻',
   contentLoading: true,
@@ -10,6 +9,11 @@ module.exports = {
       alias: {
         '@': '/'
       }
+    }
+  },
+  locales: {
+    '/': {
+      lang: 'zh-CN',
     }
   },
   markdown: {
