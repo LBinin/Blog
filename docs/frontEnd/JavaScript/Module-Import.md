@@ -2,11 +2,92 @@
 
 ### `import`
 
+#### 语法
+
+```js
+import foo from './foo';
+import 自定义的变量名 from '模块路径'
+```
+
+#### 注意点
+
+1. ESModule 的 `import` 实际上是一个**解构赋值**的过程。
+
+    ```js
+    import foo from './foo';
+    /* 相当于 */
+    import {default as foo} from './foo';
+    ```
+
+2. `import` 导入模块的过程是在 **「编译时」** 就确定的。
+
+    所以命令中不能使用表达式和变量，也就是那些只有在运行时才能得到结果的语法结构。
+
+3. `import` 命令具有**提升**效果，会提升到整个模块的头部，首先执行。
+4. 命令**只会执行一次**。也就是如果多次重复执行同一句 `import` 语句，那么只会执行一次，而不会执行多次。
+5. **单例模式**
+
+    ```js
+    import { foo } from 'my_module'
+    import { bar } from 'my_module'
+
+    // 等同于
+    import { foo, bar } from 'my_module'
+    ```
+
 ### `export`
+
+#### 语法
+
+```js
+var firstName = 'Michael'
+var lastName = 'Jackson'
+var year = 1958
+var foo = "foo"
+
+export {firstName, lastName, year}
+
+/* 别名 */
+export {firstName as f, lastName as l, year as y}
+
+/* 默认输出 */
+export default foo
+// 相当于
+export {foo as default}
+
+/* export 与 import 的复合写法 */
+export { foo, bar } from 'my_module'
+// 可以简单理解为
+import { foo, bar } from 'my_module'
+export { foo, bar }
+```
+
+#### 注意点
+
+1. `export` 后面的内容需要一个定义的变量，而不能是字面量（Literal）。
+
+    ```js
+    export 42 // 报错
+    
+    var m = 1
+    export m // 错误
+
+    var a = 1
+    export default a // 正确
+
+    export var a = 1 // 正确
+
+    var m = 1
+    export {m} // 正确
+    ```
+
+2. `export` 语句输出的接口，与其对应的值是**动态绑定关系**，即通过该接口，可以取到模块内部**实时的值**。
 
 ## CommonJS
 
 ### `require`
+
+
 
 ### `exports`
 
@@ -18,11 +99,11 @@
 
 - CommonJS 模块输出的是一个值的「**拷贝**」，ES6 模块输出的是值的「**引用**」。
 
-    也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
+    也就是说，一旦输出一个值，模块**内部的变化就影响不到这个值**。
 
 - CommonJS 模块是「**运行时**」加载，ES6 模块是「编译时」输出接口。
 
-    CommonJS 加载的是一个对象（ 即 `module.exports` 属性 ），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
+    CommonJS 加载的是一个对象（ 即 `module.exports` 属性 ），该**对象只有在脚本运行完才会生成**。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码**静态解析阶段就会生成**。
 
 ## ESModule 加载 CommonJS 模块
 
@@ -43,7 +124,7 @@ import express from 'express';
 const app = express();
 ```
 
-因为 `fs` 是 CommonJS 格式，所以只有在「运行时」才能确定输出接口楼，所以使用 `import` 是无法获取的，因为 `import` 要求在编译的时候就确定输出接口。
+因为 `fs` 是 CommonJS 格式，所以只有在「运行时」才能确定输出接口，所以使用 `import` 是无法获取的，因为 `import` 要求在编译的时候就确定输出接口。
 
 ## CommonJS 模块加载 ESModule
 
@@ -75,7 +156,7 @@ console.log(es_namespace.default)
 
 CommonJS 的一个模块，就是一个**脚本文件**。
 
-`require` 命令第一次加载某个脚本的时候，就会**执行整个脚本**，然后在内存生成一个「对象」；
+`require` 命令第一次加载某个脚本的时候，就会**执行整个脚本**，然后在**内存生成一个「对象」**；
 
 对象大致结构如下（通过 `console.log(module)` 打印）：
 
@@ -91,9 +172,9 @@ CommonJS 的一个模块，就是一个**脚本文件**。
 
 上述对象就是 Node 内部加载模块后生成的一个对象。
 
-此后如果继续 `require` 相同模块，也不会再次执行该模块，而是到缓存之中取出该对象（所以对象内部数据不会再因为被引用模块内部原因改变，相当于拿到的是运行结果的副本，ESModule 则相反）；
+此后如果继续 `require` 相同模块，也不会再次执行该模块，而是到**缓存之中取出该对象**（所以对象内部数据不会再因为被引用模块内部原因改变，相当于拿到的是运行结果的副本，ESModule 则相反）；
 
-也就是说，CommonJS 模块无论加载多少次，都只会在第一次加载时运行一次，以后再加载，就返回第一次运行的结果，除非**手动清除系统缓存**。
+也就是说，CommonJS 模块无论加载多少次，都**只会在第一次加载时运行一次**，以后再加载，就返回第一次运行的结果，除非**手动清除系统缓存**。
 
 ```js
 // 删除指定模块的缓存
@@ -107,7 +188,9 @@ Object.keys(require.cache).forEach(function(key) {
 
 ## CommonJS2
 
-[What is commonjs2 ? · Issue #1114 · webpack/webpack · GitHub](https://github.com/webpack/webpack/issues/1114#issuecomment-105509929)
+什么是 CommonJS2： [What is commonjs2 ? · Issue #1114 · webpack/webpack · GitHub](https://github.com/webpack/webpack/issues/1114#issuecomment-105509929)
+
+里面有一段话：
 
 > CommonJs spec defines only exports. But module.exports is used by node.js and many other CommonJs implementations.
 > 
@@ -115,7 +198,7 @@ Object.keys(require.cache).forEach(function(key) {
 >
 > commonjs2 also includes the module.exports stuff.
 
-可以得知，CommonJS 规范只定义了 `exports`，然鹅 `module.exports` 是 Node.js 对 CommonJS 的实现，我们把 Node.js 中这种对 CommonJS 的实现称为 CommonJS。
+可以得知，CommonJS 规范只定义了 `exports`，然鹅 `module.exports` 是 Node.js 对 CommonJS 的实现，我们把 Node.js 中这种对 CommonJS 的实现称为 **CommonJS2**。
 
 ## 面试题
 
