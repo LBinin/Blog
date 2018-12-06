@@ -247,7 +247,8 @@ function getBlogSidebar(type) {
             ['./note/Hope', '愿'],
             ['./note/If-You-Love-Me', '如果你爱我'],
           ]
-        }
+        },
+        ['./note/mind', '💊 一言']
       ]
 
     case '项目':
