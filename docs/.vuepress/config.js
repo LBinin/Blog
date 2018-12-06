@@ -203,6 +203,12 @@ function getBlogSidebar(type) {
           ]
         },
         {
+          title: '你不知道的 JavaScript',
+          children: [
+            ['./you-dont-konw-javascript/volume1', '你不知道的 JavaScript（上卷）']
+          ]
+        },
+        {
           title: '掘金',
           children: [
             ['./juejin/webpack', '使用 webpack 定制前端开发环境']
