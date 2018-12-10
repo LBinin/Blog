@@ -108,6 +108,10 @@ const fs = require('fs')
 
 ### `exports`
 
+#### 语法
+
+#### 注意点
+
 ## ESModule 与 CommonJS 关系
 
 在 Webpack 构建之后，都是 CommonJS 格式。
@@ -211,7 +215,7 @@ exports.__esModule = true;
     ```
 
     上面标明了 ESModule 是想引入一个 ESModule 中的 **`default` 属性**。
-    
+
     但是如果单独用 CommonJS 去引入这个模块 `var a = require('./a')` 得到的**整个模块对象**，显然不是 ESModule 的本意，所以 Babel 需要做出一些变化：
 
     ```js
@@ -552,10 +556,81 @@ console.log(a);
 
 ---
 
-1. 经常在各大UI组件引用的文档上会看到说明 import { button } from 'xx-ui' 这样会引入所有组件内容，需要添加额外的 babel 配置，比如 babel-plugin-component？
-2. 
-3. 我们在浏览一些 npm 下载下来的 UI 组件模块时（比如说 element-ui 的 lib 文件下），看到的都是 webpack 编译好的 js 文件，可以使用 import 或 require 再去引用。但是我们平时编译好的 js 是无法再被其他模块 import 的，这是为什么？
-4. 听说 es6 还有 tree-shaking 功能，怎么才能使用这个功能？
+### 6. 经常在各大 UI 组件引用的文档上会看到说明 `import { Button } from 'xx-ui'` 这样会引入所有组件内容，需要添加额外的 Babel 配置，比如 `babel-plugin-component`？
+
+首先，我们知道，在 Babel 和 webpack 环境下，会将 `import` 命令转化为 CommonJS 规范，这样以来 `import` 变成了 `require` 命令：
+
+```js
+import { Button } from 'xx-ui'
+// 转换成
+var a = require('xx-ui')
+var Button = a.Button
+```
+
+这样以来，`var a = require('xx-ui')` 就把**整个组件库**给引入了，并没有做到「**按需加载**」。
+
+所以，其实 `babel-plugin-component` 就做了一件事：
+
+将 `import { Button, Select } from 'element-ui'` 转换成了
+
+```js
+import Button from 'element-ui/lib/button'
+import Select from 'element-ui/lib/select'
+```
+
+即使转换成了 CommonJS 规范，也只是**引入对应这个组件的 js**，将引入量减少到最低。
+
+所以我们会看到几乎所有的UI组件库的目录形式都是
+
+    |-lib
+    | |--component1
+    | |--component2
+    | |--component3
+    |
+    |-index.common.js
+
+`lib` 文件夹下的各组件用于按需引用。
+
+---
+
+### 7. 如何使用 ESModule 的 tree-shaking 功能？
+
+webpack2 从 webpack2 开始，引入了 **tree-shaking** 技术，
+
+> 通过**静态分析** ESModule 的语法，可以删除**没有被使用的模块**。
+
+所以，这项功能**只对 ESModule 有效**，所以一旦 Babel 将 ESModule 转换成 CommonJS 规范的话，webpack2 将无法使用这项优化。
+
+所以，如果要使用这项技术，我们只能使用 **webpack 的模块处理**，加上 Babel 的 ESModule 转换能力（也就是需要关闭 Babel 的模块转换功能）。
+
+```js
+// webpack.config.js
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['babel-preset-es2015', {modules: false}]],
+          }
+        }
+      }
+    ]
+  }
+};
+```
+
+上面在 `options` 中，使用 `module: false` 关闭了 Babel 的「模块转换」功能。
+
+❗️需要注意的是：
+
+引入模块时使用了 ESModule 的语法，但是引入的那个模块却是使用 CommonJS 规范进行输出，也将无法使用**tree-shaking**。
+
+而第三方库大多是遵循 CommonJS 规范的，这也造成了引入第三方库无法减少不必要的引入。
 
 ## 参考资料
 
@@ -564,7 +639,7 @@ console.log(a);
 > [「前端」import、require、export、module.exports 混合详解 · Issue #39 · ShowJoy-com/showjoy-blog · GitHub](https://github.com/ShowJoy-com/showjoy-blog/issues/39)
 >
 > [Node中没搞明白require和import，你会被坑的很惨 - 腾讯Web前端 IMWeb 团队社区 | blog | 团队博客](http://imweb.io/topic/582293894067ce9726778be9)
-> 
+>
 > [深入理解 ES6 模块机制 - 前端 - 掘金](https://juejin.im/entry/5a879e28f265da4e82635152)
-> 
+>
 > [require，import区别？ - 知乎](https://www.zhihu.com/question/56820346)
