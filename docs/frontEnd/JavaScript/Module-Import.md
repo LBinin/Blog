@@ -112,8 +112,6 @@ const fs = require('fs')
 
 在 Webpack 构建之后，都是 CommonJS 格式。
 
-### 差异
-
 - CommonJS 模块输出的是一个值的「**拷贝**」，ES6 模块输出的是值的「**引用**」。
 
     也就是说，一旦输出一个值，模块**内部的变化就影响不到这个值**。
@@ -168,6 +166,81 @@ console.log(es_namespace.default)
 ```
 
 需要注意的是，`import` 是运行时执行的，所以可以通过条件去 `import` 或者 `import` 一个动态生成的 module name。
+
+## Babel 转换 ES6 的模块化语法
+
+ESModule 语法见 [ESModule](#esmodule)
+
+Babel 的**作用之一**就是**将 ES6 转换成 CommonJS 规范**。
+
+### 模块输出语法转换
+
+Babel 对于模块输出的转换，就是把所有的输出都**赋值道 `exports` 属性上**，并且**添加上 ESModule 的标签**（表示这个模块是由 ESModule 转换来的 CommonJS 输出）。
+
+```js
+export default 123;
+
+export const a = 123;
+
+const b = 3;
+const c = 4;
+export { b, c };
+
+/* 转换成 CommonJS */
+exports.default = 123;
+exports.a = 123;
+exports.b = 3;
+exports.c = 4;
+exports.__esModule = true;
+```
+
+### 模块输入语法转换
+
+- **对于解构赋值输入**
+
+    `import {a} from './a.js'` 直接转换成 `require('./a.js').a` 即可。
+
+- **对于 `default`**
+
+    在 [ESModule · import](#import) 中说过：
+
+    ```js
+    import a from './a';
+    /* 相当于 */
+    import {default as a} from './a';
+    ```
+
+    上面标明了 ESModule 是想引入一个 ESModule 中的 **`default` 属性**。
+    
+    但是如果单独用 CommonJS 去引入这个模块 `var a = require('./a')` 得到的**整个模块对象**，显然不是 ESModule 的本意，所以 Babel 需要做出一些变化：
+
+    ```js
+    function _interopRequireDefault(obj) {
+      // 判断传入的对象是 ESModule 还是 CommonJS 模块
+      return obj && obj.__esModule  // 这里就是之前说的为什么要加上 `__esModule` 属性
+        ? obj                       // 如果是 ESModule，就直接返回传入的模块对象
+        : { 'default': obj };       // 如果不是 ESModule，则将传入的 `module.exports` 放置在一个新对象 `default` 上，来模拟 ESModule
+    }
+
+    var _a = require('assert'); // 获取到的是整个模块对象，暂时不知道是否是 ESModule
+    var _a2 = _interopRequireDefault(_a); // 将获取的模块对象解析并获取到一定会有 `default` 属性，并且 `default` 上就是模块输出接口的对象
+
+    var a = _a2['default']; // 这时候 `a` 就是模块的默认输出了
+    ```
+
+    通过 Babel 的 `_interopRequireDefault` 函数，能够获取到模块的**默认导出对象**。
+
+    这个**默认导出对象**，如果是 ESModule，就是通过 `exports default XX` 导出的内容；
+
+    如果是 CommonJS 模块，就是整个 `module.exports`。
+
+- **对于 `*` 通配符号**
+
+    `import * as a from './a.js'` 这段代码在 ESModule 中的本意是想**将 ESModule 中的所有命名输出以及 defalut 输出打包成一个对象赋值给 a 变量**。（注意，本意是想把 **ESModule** 中的所有内容输出，而不是 CommonJS 模块）。
+
+    所以在上面的 `_interopRequireDefault` 函数中，对于 ESModule 直接返回 `exports`（[ESModule 被 Babel 转义](#模块输出语法转换)后的 `exports` 变量，上面存在 `default` 其他内容及 `__esModule`）
+
+    对于 CommonJS 模块，返回的对象上的 `default` 上就是整个 `module.exports`。
 
 ## CommonJS 加载模块原理
 
@@ -441,15 +514,48 @@ console.log(a);
 
 ---
 
-### 3. 为何有的地方使用 `require` 去引用一个模块时需要加上 `default`？ `require('xx').default`
+### 3. Babel 以及 webpack 在模块化的场景中充当了什么角色？哪个启到了关键作用？
+
+#### 分工
+
+- **webpack**：将 ES6、CommonJS 等模块化通过自己内部的机制统一成 webpack 的模块化。
+
+- **Babel**：虽然 Babel 也可以转换 ES6 的模块语法；但是除了模块化，还有**其他的 ES6 语法**，这些 ES6 语法就需要交给 Babel 去做「**转义**」。
+
+#### 关系
+
+- webpack 的原生转换可以多做一步「**静态分析**」，能够使用 **Tree-shaking** 进行代码压缩。
+
+- Babel 能够将 ES6 的 **`import` 等模块化关键字**转换成 **CommonJS 格式**。这样一来，webpack 就不需要在做处理，直接使用 webpack 在**运行时定义的 `__webpack_require__` 方法**。
+
+---
+
+### 4. 为什么可以使用 ESModule 的 `import` 去引用 CommonJS 规范定义的模块，或者反过来也可以又是为什么？
+
+因为借助 Babel 的转换（见 [Babel 转换 ES6 的模块化语法](#babel-转换-es6-的模块化语法)），ESModule 的模块系统最终还是会转换成 CommonJS 规范的。
+
+所以我们如果是使用 Babel 转换 ESModule，混合使用 es6 的模块和 CommonJS 的规范是没有问题的，因为最终都会转换成 CommonJS 规范。
+
+---
+
+### 5. 为何有的地方使用 `require` 去引用一个模块时需要加上 `default`，即 `require('xx').default`？
+
+在 [Babel 转换 ES6 的模块化语法](#babel-转换-es6-的模块化语法) 说到，通过 Babel 的转化，所有的 ESModule 都会转换为 CommonJS 模块。
+
+我们使用 `require` 命令的时候，由于 Babel 和 webpack 转化了模块的输出接口，**统一成了 CommonJS 规范**，所以其实引入的是整个 `module.exports` 的输出对象。
+
+对于 ESModule 来说，`export default **` 相当于 `exports.default`，这样一来，我们在 `require` 后，只得到了 `exports` 的内容，想要**访问 ESModule 的默认输出**，就必须用 `.default` 去访问。
+
+所以，总结一个很关键的点：
+
+**`exports default` 并不是指定了模块的默认输出，而是输出了一个名为 `default` 的变量。**
 
 ---
 
 1. 经常在各大UI组件引用的文档上会看到说明 import { button } from 'xx-ui' 这样会引入所有组件内容，需要添加额外的 babel 配置，比如 babel-plugin-component？
-2. 为什么可以使用 es6 的 import 去引用 commonjs 规范定义的模块，或者反过来也可以又是为什么？
+2. 
 3. 我们在浏览一些 npm 下载下来的 UI 组件模块时（比如说 element-ui 的 lib 文件下），看到的都是 webpack 编译好的 js 文件，可以使用 import 或 require 再去引用。但是我们平时编译好的 js 是无法再被其他模块 import 的，这是为什么？
-4. babel 在模块化的场景中充当了什么角色？以及 webpack ？哪个启到了关键作用？
-5. 听说 es6 还有 tree-shaking 功能，怎么才能使用这个功能？
+4. 听说 es6 还有 tree-shaking 功能，怎么才能使用这个功能？
 
 ## 参考资料
 
@@ -458,3 +564,7 @@ console.log(a);
 > [「前端」import、require、export、module.exports 混合详解 · Issue #39 · ShowJoy-com/showjoy-blog · GitHub](https://github.com/ShowJoy-com/showjoy-blog/issues/39)
 >
 > [Node中没搞明白require和import，你会被坑的很惨 - 腾讯Web前端 IMWeb 团队社区 | blog | 团队博客](http://imweb.io/topic/582293894067ce9726778be9)
+> 
+> [深入理解 ES6 模块机制 - 前端 - 掘金](https://juejin.im/entry/5a879e28f265da4e82635152)
+> 
+> [require，import区别？ - 知乎](https://www.zhihu.com/question/56820346)
