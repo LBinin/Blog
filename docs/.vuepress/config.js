@@ -162,7 +162,10 @@ function getBlogSidebar(type) {
       return [
         {
           title: '服务器',
-          collapsable: false,
+          children: [
+            ['./ESC/ESC-Backup', '阿里云跨实例数据迁移']
+          ]
+          // collapsable: false,
         }
       ]
 
