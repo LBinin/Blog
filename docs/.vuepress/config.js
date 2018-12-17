@@ -163,7 +163,12 @@ function getBlogSidebar(type) {
         {
           title: '服务器',
           children: [
-            ['./ESC/ESC-Backup', '阿里云跨实例数据迁移']
+            ['./ESC/server-php', '服务器配置 —— 安装 PHP'],
+            ['./ESC/server-mysql', '服务器配置 —— 安装 Mysql'],
+            ['./ESC/server-nginx', '服务器配置 —— Nginx 的安装和配置'],
+            ['./ESC/server-nginx-domain', '服务器配置 —— Nginx 添加多个二级子域名'],
+            ['./ESC/server-vsftpd', '服务器配置 —— 安装 vsftpd 及配置'],
+            ['./ESC/ESC-Backup', '阿里云跨实例数据迁移'],
           ]
           // collapsable: false,
         }
