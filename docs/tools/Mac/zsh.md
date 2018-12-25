@@ -188,6 +188,40 @@ plugins=(其他的插件 zsh-syntax-highlighting)
 
 无需安装，zsh 自带 plugin，但是未开启，需要在 `~/.zshrc` 中添加 `plugins=(其他的插件 sudo)`，最后 `source ~/.zshrc`，即可使用。
 
+### bat
+
+> 可以代替 cat 的牛逼哄哄的文件查看工具！
+
+#### Mac
+
+```bash
+$ brew install bat
+```
+
+#### CentOS
+
+进入 [https://github.com/sharkdp/bat/releases](https://github.com/sharkdp/bat/releases)，下载 `bat-v*-x86_64-unknown-linux-musl.tar.gz` 版本，后自行编译。
+
+```bash
+$ wget -O bat.zip https://github.com/sharkdp/bat/releases/download/v0.9.0/bat-v0.9.0-x86_64-unknown-linux-musl.tar.gz
+
+$ tar -xvzf bat.zip -C /usr/local
+
+$ cd /usr/local && mv bat-v0.7.1-x86_64-unknown-linux-musl bat
+
+$ cd ~
+```
+
+然后在 `~/.zshrc` 添加 Alias：
+
+```bash
+alias bat="/usr/local/bat/bat"
+```
+
+记得 `source` 一下~
+
+参考：[how to install on CentOS 7? · Issue #325 · sharkdp/bat · GitHub](https://github.com/sharkdp/bat/issues/325#issuecomment-425630261)
+
 ## 参看资料
 
 > [zsh+on-my-zsh配置教程指南（程序员必备） - Michael翔的IT私房菜 - SegmentFault 思否](https://segmentfault.com/a/1190000013612471)
