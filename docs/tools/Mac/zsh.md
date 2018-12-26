@@ -207,9 +207,7 @@ $ wget -O bat.zip https://github.com/sharkdp/bat/releases/download/v0.9.0/bat-v0
 
 $ tar -xvzf bat.zip -C /usr/local
 
-$ cd /usr/local && mv bat-v0.7.1-x86_64-unknown-linux-musl bat
-
-$ cd ~
+$ cd /usr/local && mv bat-v0.9.0-x86_64-unknown-linux-musl bat
 ```
 
 然后在 `~/.zshrc` 添加 Alias：
