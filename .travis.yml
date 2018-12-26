@@ -6,7 +6,7 @@ before_install:
   -in id_rsa_blog.enc -out ~/.ssh/id_rsa_blog -d
 - chmod 600 ~/.ssh/id_rsa_blog
 - echo -e "Host lbinin.com\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/id_rsa_blog" >> ~/.ssh/config
-- yarn global add vuepress
+- yarn global add vuepress@next
 addons:
   ssh_known_hosts: lbinin.com
 install:
