@@ -74,9 +74,10 @@ module.exports = {
     '@vuepress/pwa': {
       serviceWorker: true,
       updatePopup: {
-        message: "有新的内容更新啦~点击下方按钮更新",
-        buttonText: "遭遇！野生的博客之神！"
-      }
+        message: "遭遇！野生的博客之神！",
+        buttonText: "点我更新"
+      },
+      popupComponent: 'update-popup',
     },
   }
 };

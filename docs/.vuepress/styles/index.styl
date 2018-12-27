@@ -46,6 +46,9 @@ p
   border-radius 4px
   font-size 0.9rem
   transition all 0.3s
+  border none
+  -webkit-appearance none
+  cursor pointer
 
   i
     font-size 1.5em
@@ -54,3 +57,7 @@ p
   &:hover
     text-decoration none !important
     background #59c795
+
+  &:disabled
+    opacity: 0.7;
+    cursor: not-allowed;
