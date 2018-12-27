@@ -3,7 +3,7 @@
   <h1>🤟🏻</h1>
 </div>
 
-# 热烈庆祝 🎉
+# 热烈庆祝 🎉 
 
 🎉 热烈庆祝互联网龙头企业「比格漏」公司旗下个人博客业务今日正式开业
 
@@ -28,6 +28,10 @@
 2018-11-06 16:46 📍于上海
 
 By Bigno with love ❤️
+
+---
+
+[![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)
 
 <style lang="scss">
 .intro {
