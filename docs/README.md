@@ -1,4 +1,4 @@
-<div class="intro">
+<div class="align-center">
   <h1>热爱折腾，兴趣驱动</h1>
   <h1>🤟🏻</h1>
 </div>
@@ -23,7 +23,7 @@
 
 一起加油啦，祝我司旗下博客业务飞黄腾达!
 
-对于没有门票的游客，我们也贴心的准备了 <a href="/archives/" class="start-btn">无票通道 <i class="iconfont icon-feiji"/></a>
+对于没有门票的游客，我们也贴心的准备了 <a href="/archives/" class="blog-btn">无票通道 <i class="iconfont icon-feiji"/></a>
 
 2018-11-06 16:46 📍于上海
 
@@ -32,28 +32,3 @@ By Bigno with love ❤️
 ---
 
 [![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)
-
-<style lang="scss">
-.intro {
-  text-align: center;
-}
-
-.start-btn {
-  background: #3eaf7c;
-  color: #fff;
-  padding: 0.5em;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-
-  i {
-    font-size: 1.5em;
-    vertical-align: sub;
-  }
-
-  &:hover {
-    text-decoration: none !important;
-    background: #59c795;
-  }
-}
-</style>
