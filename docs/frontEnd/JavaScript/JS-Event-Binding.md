@@ -39,7 +39,7 @@
 ## 事件委托（事件代理）
 事件委托（也被称作事件代理）就是利用冒泡的原理，把事件加到父元素或祖先元素上，触发执行效果。
 
-![事件过程](../images/F220CA41-7E7E-4896-AA88-578752EE6DA2.png)
+![事件过程](https://img.alicdn.com/tfs/TB1ICA8ywHqK1RjSZFEXXcGMXXa-540-486.png)
 
 ### 基本实现
 
