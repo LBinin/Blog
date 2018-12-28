@@ -1,5 +1,5 @@
 <div class="align-center">
-  <h1>热爱折腾，兴趣驱动</h1>
+  <h1>执着折腾，兴趣驱动</h1>
   <h1>🤟🏻</h1>
 </div>
 
