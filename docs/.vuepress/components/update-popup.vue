@@ -28,5 +28,6 @@ export default {
   padding: 10px;
   border: 4px solid #3eaf7c;
   border-radius: 8px;
+  z-index: 2;
 }
 </style>
