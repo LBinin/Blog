@@ -1,0 +1,63 @@
+blockquote
+  border-left 0.25rem solid #3eaf7c
+  font-size 1rem
+
+details
+  padding 10px 0
+
+  summary
+    cursor pointer
+    user-select none
+    &:focus
+      outline none
+  ul
+    margin-left 1.5em
+    margin-bottom 0
+
+button
+  appearance none
+  -webkit-appearance none
+  outline none
+
+  &:focus
+    outline none
+
+cite
+  display block
+  text-align right
+  font-style normal
+
+  &::before
+    content "——"
+    padding-right 0.5em
+
+p
+  & > img:first-child
+    display block
+    margin 0 auto
+
+.align-center
+  text-align center
+
+.blog-btn
+  background #3eaf7c
+  color #fff
+  padding 0.5em
+  border-radius 4px
+  font-size 0.9rem
+  transition all 0.3s
+  border none
+  -webkit-appearance none
+  cursor pointer
+
+  i
+    font-size 1.5em
+    vertical-align sub
+
+  &:hover
+    text-decoration none !important
+    background #59c795
+
+  &:disabled
+    opacity: 0.8;
+    cursor: not-allowed;

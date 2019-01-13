@@ -125,7 +125,25 @@ $ service nginx start
 
 添加对应端口的配置后，尝试访问，发现问题解决。
 
-### 参考资料
+### FTP 无法连接
+
+因为修改了端口号，且更换后的实例是阿里云的「专有网络」，导致一直提示：
+
+:::danger 错误
+状态: 	服务器发回了不可路由的地址。使用服务器地址代替。
+
+命令: 	LIST
+
+错误: 	无法建立数据连接: ETIMEDOUT - 连接尝试超时
+:::
+
+添加了对应端口的安全组策略也无法解决，后面尝试重新走一遍修改端口号。
+
+参考：[更改 vsftpd 的端口号 - suchy - CSDN博客](https://blog.csdn.net/shudaqi2010/article/details/36640733)
+
+在 `/etc/service` 文件在把 `ftp 21/tcp` 改为 `ftp 自定义端口号/tcp` 后，重启 **vsftpd** 即可连接成功！
+
+## 参考资料
 
 > [使用快照创建自定义镜像 - 用户指南| 阿里云](https://www.alibabacloud.com/help/zh/doc-detail/25460.htm?spm=a2c63.p38356.b99.154.23dc6a71VSi64i)
 >

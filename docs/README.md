@@ -1,9 +1,9 @@
-<div class="intro">
-  <h1>热爱折腾，兴趣驱动</h1>
+<div class="align-center">
+  <h1>执着折腾，兴趣驱动</h1>
   <h1>🤟🏻</h1>
 </div>
 
-# 热烈庆祝 🎉
+# 热烈庆祝 🎉 
 
 🎉 热烈庆祝互联网龙头企业「比格漏」公司旗下个人博客业务今日正式开业
 
@@ -23,33 +23,12 @@
 
 一起加油啦，祝我司旗下博客业务飞黄腾达!
 
-对于没有门票的游客，我们也贴心的准备了 <a href="/archives/" class="start-btn">无票通道 <i class="iconfont icon-feiji"/></a>
+对于没有门票的游客，我们也贴心的准备了 <a href="/archives/" class="blog-btn">无票通道 <i class="iconfont icon-feiji"/></a>
 
 2018-11-06 16:46 📍于上海
 
 By Bigno with love ❤️
 
-<style lang="scss">
-.intro {
-  text-align: center;
-}
+---
 
-.start-btn {
-  background: #3eaf7c;
-  color: #fff;
-  padding: 0.5em;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-
-  i {
-    font-size: 1.5em;
-    vertical-align: sub;
-  }
-
-  &:hover {
-    text-decoration: none !important;
-    background: #59c795;
-  }
-}
-</style>
+[![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)

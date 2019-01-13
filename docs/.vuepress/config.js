@@ -18,10 +18,10 @@ module.exports = {
   },
   markdown: {
     // lineNumbers: true,
-    config: md => {
-      // 使用 markdown-it 插件
-      md.use(require('markdown-it-task-lists'))
-    },
+  },
+  extendMarkdown: md => {
+    // 使用 markdown-it 插件
+    md.use(require('markdown-it-task-lists'))
   },
   head: [
     // ['link', { rel: 'icon', href: `/logo.png` }],
@@ -35,12 +35,12 @@ module.exports = {
     sidebarDepth: 3,
     lastUpdated: '上次更新',
     repo: 'LBinin/blog',
-    serviceWorker: {
-      updatePopup: {
-        message: "有新的内容更新啦~点击下方按钮更新",
-        buttonText: "遭遇！野生的博客之神！"
-      }
-    },
+    // serviceWorker: {
+    //   updatePopup: {
+    //     message: "有新的内容更新啦~点击下方按钮更新",
+    //     buttonText: "遭遇！野生的博客之神！"
+    //   }
+    // },
     nav: [
       {
         text: '🌟博客',
@@ -69,8 +69,16 @@ module.exports = {
     },
   },
   plugins: {
-    'medium-zoom': true,
+    '@vuepress/medium-zoom': true,
     '@vuepress/back-to-top': true,
+    '@vuepress/pwa': {
+      serviceWorker: true,
+      updatePopup: {
+        message: "遭遇！野生的博客之神！",
+        buttonText: "点我更新"
+      },
+      popupComponent: 'update-popup',
+    },
   }
 };
 

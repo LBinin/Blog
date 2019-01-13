@@ -198,11 +198,11 @@ componentDidUpdate(prevProps, prevState) {
 
 ## 图解
 
-![React 生命周期图解1](../images/2018-11-15.11.49.34.png)
+![React 生命周期图解1](https://img.alicdn.com/tfs/TB1Rvs5ywHqK1RjSZJnXXbNLpXa-3144-1324.png)
 
-![React 生命周期图解2](../images/094E3CDC-BE16-49D3-B6CC-3667E4FF8CC6.png)
+![React 生命周期图解2](https://img.alicdn.com/tfs/TB1jc.7ywHqK1RjSZFkXXX.WFXa-488-636.png)
 
-![React 生命周期图解3](../images/B9D3BCF9-32D1-4A14-BB75-7E6436B12A07.png)
+![React 生命周期图解3](https://img.alicdn.com/tfs/TB17hE0ypYqK1RjSZLeXXbXppXa-800-344.png)
 
 ## 参考资料
 

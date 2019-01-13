@@ -1,5 +1,9 @@
 # 你好，
 
+<p>
+  <img src="https://img.alicdn.com/tfs/TB1qw.5yyrpK1RjSZFhXXXSdXXa-621-621.jpg" width=233>
+</p>
+
 我是 Bigno
 
 ~~97 年生，软件工程专业~~

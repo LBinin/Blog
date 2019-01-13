@@ -44,9 +44,9 @@ console.log(obj.__proto__ === Object.prototype) // true
 
 ## 图解
 
-![图解 JavaScript 原型1](../images/B1D287E6-6A57-4518-B145-2314DBC9CF54.png)
+![图解 JavaScript 原型1](https://img.alicdn.com/tfs/TB1xOoVywDqK1RjSZSyXXaxEVXa-2868-1602.png)
 
-![图解 JavaScript 原型2](../images/050D8060-0847-4108-A80F-15A1C3A9D7A5.png)
+![图解 JavaScript 原型2](https://img.alicdn.com/tfs/TB1KNhnyNjaK1RjSZKzXXXVwXXa-2836-1368.png)
 
 ## 原型链
 
