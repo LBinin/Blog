@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "element-ui": "^2.4.11",
-    "html2canvas": "^1.0.0-alpha.12"
+    "global": "^4.3.2",
+    "html2canvas": "^1.0.0-alpha.12",
+    "vuepress": "^1.0.0-alpha.31"
   }
 }
