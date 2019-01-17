@@ -1,4 +1,8 @@
-# 项目总结
+---
+siderBar: auto
+---
+
+## 项目总结
 
 React 16.x 称之为 「React Fiber」，React 底层在事件循环中加入优先级的概念，可以利用时间循环的碎片时间执行一些高优先级的用户交互，提高 React 在使用过程中的用户体验。（React 16: https://www.jianshu.com/p/af0ae26eac18）
 
@@ -108,7 +112,7 @@ https://reactjs.org/docs/typechecking-with-proptypes.html
 
 ### 虚拟 DOM
 
-虚拟 DOM 就是一个 JS 对象，用它来描述真是 DOM。
+虚拟 DOM 就是一个 JS 对象，用它来描述真实 DOM。
 
 ```jsx
 <div id="dom">
@@ -595,7 +599,7 @@ https://juejin.im/entry/59a980306fb9a02485103d0b
     需要注意的是：
 
     - 这个函数接收一个参数 `dispatch`，也就是 store 的 `dispatch()` 方法（不需要引入 store）
-    - 真是因为我们使用了 `redux-thunk` 这个中间件，才能让我们的 action（被 `dispatch` 的 action）作为一个**函数**，否则，将会报错：`action 必须是一个对象`
+    - 正是因为我们使用了 `redux-thunk` 这个中间件，才能让我们的 action（被 `dispatch` 的 action）作为一个**函数**，否则，将会报错：`action 必须是一个对象`
     - 引入 `redux-thunk` 后，如果 redux 发现 action 是一个函数，这个函数就会被执行，然后传入 `dispatch` 方法作为参数。
 
     ```js
@@ -651,7 +655,7 @@ https://github.com/redux-saga/redux-saga
 
 - 安装
 
-    ``bash
+    ```bash
     $ yarn add redux-saga
     ```
 
