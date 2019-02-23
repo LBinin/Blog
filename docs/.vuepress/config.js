@@ -35,12 +35,6 @@ module.exports = {
     sidebarDepth: 3,
     lastUpdated: '上次更新',
     repo: 'LBinin/blog',
-    // serviceWorker: {
-    //   updatePopup: {
-    //     message: "有新的内容更新啦~点击下方按钮更新",
-    //     buttonText: "遭遇！野生的博客之神！"
-    //   }
-    // },
     nav: [
       {
         text: '🌟博客',
@@ -121,6 +115,10 @@ function getBlogSidebar(type) {
         {
           title: 'CSS',
           children: [
+            // ['./CSS/zindex', 'z-index 详解'],
+            ['./CSS/css-stacking-context', '深入理解 CSS 层叠上下文'],
+            // ['./CSS/block-formatting-context', '深入理解块级格式化上下文（BFC）及应用'],
+            ['./CSS/mix-blend-mode', 'CSS 混合模式及 isolation 的作用和表现'],
             ['./CSS/utils', 'CSS 工具库'],
           ]
         },
@@ -128,6 +126,7 @@ function getBlogSidebar(type) {
           title: '基础知识',
           children: [
             ['./base/HTML5-New-Tags', 'HTML5 新标签'],
+            // ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Repaint-Reflow', '重绘与回流'],
             ['./base/Regular-Expression', '正则表达式基础'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
@@ -198,13 +197,7 @@ function getBlogSidebar(type) {
       return [
         // ['', '兴趣导航'],
         ['./USB', 'USB 各版本区别及基本知识'],
-        // {
-        //   title: 'Mac',
-        //   children: [
-        //     ['./Mac/brew', 'Homebrew - Mac 下的包管理工具'],
-        //     ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
-        //   ]
-        // }
+        // ['./WiFi', '有关 WiFi 的基本知识'],
       ]
 
     case '学习':
@@ -219,12 +212,10 @@ function getBlogSidebar(type) {
           ]
         },
         {
-          title: '微信小程序',
+          title: 'Google Developers',
           children: [
-            ['./mp/', '小程序入手'],
-            ['./mp/Logic-Layer', '逻辑层'],
-            ['./mp/wxss', 'WXSS'],
-            ['./mp/wxml', 'WXML'],
+            // ['./Google-Developers/', '目录'],
+            // ['./Google-Developers/Lighthouse', 'Lighthouse 使用入门'],
           ]
         },
         {
