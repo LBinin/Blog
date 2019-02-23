@@ -219,6 +219,15 @@ function getBlogSidebar(type) {
           ]
         },
         {
+          title: '微信小程序',
+          children: [
+            ['./mp/', '小程序入手'],
+            ['./mp/Logic-Layer', '逻辑层'],
+            ['./mp/wxss', 'WXSS'],
+            ['./mp/wxml', 'WXML'],
+          ]
+        },
+        {
           title: '你不知道的 JavaScript',
           children: [
             ['./you-dont-konw-javascript/volume1', '你不知道的 JavaScript（上卷）']
