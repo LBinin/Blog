@@ -126,9 +126,9 @@ function getBlogSidebar(type) {
           title: '基础知识',
           children: [
             ['./base/HTML5-New-Tags', 'HTML5 新标签'],
-            // ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Repaint-Reflow', '重绘与回流'],
             ['./base/Regular-Expression', '正则表达式基础'],
+            ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
           ]
         },
