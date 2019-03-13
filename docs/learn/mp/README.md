@@ -1,4 +1,6 @@
-## 代码架构
+# 小程序入手
+
+## 目录结构
 
 在使用「普通模板」**初始化**小程序后我们可以看到以下的结构：
 
@@ -22,6 +24,25 @@
     │
     └── utils                 # 工具库
         └── util.js
+
+## 小程序构成
+
+一个正常运行的小程序通常包括一个描述整体程序的描述文件，这些描述文件分别为：
+
+- `app.js`：小程序的整体「生命周期」描述及全局变量配置。
+
+- [`app.json`](#app-json)：小程序的全局配置，如页面文件的路径、窗口表现、设置网络超时时间、设置多 tab 等。
+
+- `app.wxss`：小程序的全局样式表。
+
+## 页面构成
+
+一个小程序的页面通常包含了下面四个文件：
+
+- `.js` 文件：负责页面逻辑。
+- `.wxss` 文件：负责页面样式。
+- `.wxml` 文件：负责页面结构。
+- `.json` 文件：负责页面配置，详见[页面配置项列表 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/config.html#页面配置项列表)（只能覆盖 `app.json` 下 `window` 字段中的相同配置项，无需写 `window` 这个属性）。
 
 ## 文件介绍
 
@@ -67,7 +88,7 @@
 
 ```json
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
 	},
@@ -126,7 +147,7 @@
 </view>
 ```
 
-其实和 Vue 蛮类似的，小程序的框架也是用到了这个思路，采用 MVVM 的开发模式( 例如 React, Vue )，提倡把渲染和逻辑分离。
+其实和 Vue 蛮类似的，小程序的框架也是用到了这个思路，采用 MVVM 的开发模式（例如 React, Vue），提倡把渲染和逻辑分离。
 
 WXML 详情 👉🏻 ：[WXML](./WXML.md)
 
@@ -170,7 +191,7 @@ WXSS 详情 👉🏻 ：[WXSS](./WXSS.md)
 
 ## JS 部分
 
-处理交互的肯定还是需要我大 JS 来操作的啦~
+逻辑层的交互处理的还是需要我大 JS 来操作的啦~
 
 默认的 `pages/logs/logs.js` 文件下内容：
 
@@ -192,8 +213,10 @@ Page({
 })
 ```
 
-具体交互逻辑、数据绑定等部分后面会详细说道。
+逻辑层 详情 👉🏻 ：[逻辑层](./Logic-Layer.md)
 
 ## 参考资料
 
-[简易教程 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/quickstart/basic/getting-started.html)
+> [简易教程 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/quickstart/basic/getting-started.html)
+>
+> [框架 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/MINA.html)
