@@ -38,11 +38,13 @@ p
     margin 0 auto
 
 // 增强当前文章提示效果
-.sidebar-link
-  &.active
-    &+ul
-      border-left 0.25rem solid #3eaf7c
-      margin-bottom 1rem
+.sidebar-group-items
+  & > li > .sidebar-link
+    font-weight bold !important
+    &.active
+      &+ul
+        border-left 0.25rem solid #3eaf7c
+        margin-bottom 0.8rem
 
 // 自定义样式
 .align-center
