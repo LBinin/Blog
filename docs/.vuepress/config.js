@@ -220,6 +220,15 @@ function getBlogSidebar(type) {
           ]
         },
         {
+          title: '微信小程序',
+          children: [
+            ['./mp/', '小程序入手'],
+            ['./mp/Logic-Layer', '逻辑层'],
+            // ['./mp/wxss', 'WXSS'],
+            // ['./mp/wxml', 'WXML'],
+          ]
+        },
+        {
           title: '你不知道的 JavaScript',
           children: [
             ['./you-dont-konw-javascript/volume1', '你不知道的 JavaScript（上卷）']
@@ -229,6 +238,12 @@ function getBlogSidebar(type) {
           title: '掘金',
           children: [
             ['./juejin/webpack', '使用 webpack 定制前端开发环境']
+          ]
+        },
+        {
+          title: 'League of Legends',
+          children: [
+            ['./lol/rune', '符文系统']
           ]
         }
       ]
