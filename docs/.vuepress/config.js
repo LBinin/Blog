@@ -100,6 +100,7 @@ function getBlogSidebar(type) {
           title: 'React',
           children: [
             ['./React/React-HOC', 'React 高阶组件 HOC'],
+            ['./React/React-SFC', 'React SFC 无状态组件及多种组件写法'],
             ['./React/React-Lifecycle', 'React 生命周期'],
           ]
         },
