@@ -224,8 +224,7 @@ function getBlogSidebar(type) {
           children: [
             ['./mp/', '小程序入手'],
             ['./mp/Logic-Layer', '逻辑层'],
-            // ['./mp/wxss', 'WXSS'],
-            // ['./mp/wxml', 'WXML'],
+            ['./mp/View-Layer', '视图层'],
           ]
         },
         {
