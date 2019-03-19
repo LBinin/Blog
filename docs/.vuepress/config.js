@@ -94,6 +94,7 @@ function getBlogSidebar(type) {
             ['./JavaScript/JS-Event-Binding', 'Js 中事件绑定、事件代理和事件委托'],
             ['./JavaScript/Set-Map', 'Set 与 Map'],
             ['./JavaScript/Module-Import', '模块化中的 import 和 require'],
+            ['./JavaScript/JS-Equality-Comparisons', 'Js 中的相等判断及类型转换'],
           ]
         },
         {
