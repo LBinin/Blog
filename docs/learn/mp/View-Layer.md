@@ -560,3 +560,234 @@ WXS 函数的除了纯逻辑的运算，还可以通过封装好的 [ComponentDe
 > 参数：(eventName, detail)
 
 和组件的 `triggerEvent` 一致。
+
+## SelectorQuery
+
+> 选取节点，获取 `NodeRef` 对象。
+
+通过 `wx.createSelectorQuery()` 创建一个 **`SelectorQuery`** 实例。
+
+<details>
+<summary><strong>举例</strong></summary>
+
+```js
+// 这是一个自定义组件
+Component({
+  queryMultipleNodes() {
+    // 将查询范围从 `页面` 定义为 `当前自定义组件`
+    const query = wx.createSelectorQuery().in(this)
+
+    query
+      .select('#the-id')
+      .boundingClientRect(function (res) {
+        res.top // 这个组件内 #the-id 节点的上边界坐标
+      })
+      .exec()
+  }
+})
+
+// 第二种写法
+const query = wx.createSelectorQuery()
+
+query.select('#the-id').boundingClientRect()
+query.selectViewport().scrollOffset()
+query.exec(function (res) {
+  res[0].top        // #the-id 节点的上边界坐标（select('#the-id').boundingClientRect 结果）
+  res[1].scrollTop  // 显示区域的竖直滚动位置（selectViewport().scrollOffset 结果）
+})
+```
+
+</details>
+
+### in
+
+**[SelectorQuery](#SelectorQuery) SelectorQuery.in(Component component)**
+
+> 将选择器的选取范围更改为参数中的自定义组件 component 内。（初始时，选择器仅选取**页面范围**的节点，不会选取任何自定义组件中的节点）。
+
+### select
+
+**[NodesRef](#NodesRef) SelectorQuery.select(string selector)**
+
+> 在当前页面下选择第一个匹配选择器 selector 的节点。
+
+### selectAll
+
+**[NodesRef](#NodesRef) SelectorQuery.selectAll(string selector)**
+
+> 在当前页面下选择匹配选择器 selector 的所有节点。
+
+### selectViewport
+
+**[NodesRef](#NodesRef) SelectorQuery.selectViewport()**
+
+> 选择显示区域。可用于获取显示区域的尺寸、滚动位置等信息。
+
+### exec
+
+**[NodesRef](#NodesRef) SelectorQuery.exec(function callback)**
+
+> 执行所有的请求。请求结果按请求次序构成数组，在 callback 的第一个参数中返回。
+
+## NodeRef
+
+用于**获取** WXML 节点信息的对象。（用于获取，而不是去其上存储信息）
+
+### fields
+
+**[SelectorQuery](#SelectorQuery) NodesRef.fields(Object fields)**
+
+> 获取节点的相关信息；需要获取的字段在 `fields` 中指定。
+
+<details>
+<summary><strong>举例</strong></summary>
+
+```js
+Page({
+  getFields() {
+    wx
+      .createSelectorQuery()
+      .select('.the-class')
+      .fields({
+        id: true,           // 是否返回节点 id
+        dataset: true,      // 是否返回节点 dataset
+        rect: true,         // 是否返回节点布局位置（left right top bottom）
+        size: true,         // 是否返回节点尺寸（width height）
+        scrollOffset: true, // 是否返回节点的 scrollLeft scrollTop，节点必须是 scroll-view 或者 viewport
+        context: true,      // 是否返回节点对应的 Context 对象
+
+        properties: [       // 指定属性名列表，返回节点对应属性名的当前属性值（只能获得组件文档中标注的常规属性值，id class style 和事件绑定的属性值不可获取）
+          'scrollX',
+          'scrollY'
+        ],
+        computedStyle: [    // 指定样式名列表，返回节点对应样式名的当前值
+          'margin',
+          'backgroundColor'
+        ],
+      }, function (res) {
+        rect.id         // 节点的 ID
+        res.dataset     // 节点的 dataset
+        res.width       // 节点的宽度
+        res.height      // 节点的高度
+        res.scrollLeft  // 节点的水平滚动位置
+        res.scrollTop   // 节点的竖直滚动位置
+        res.context     // 节点对应的 Context 对象
+        res.scrollX     // 节点 scroll-x 属性的当前值
+        res.scrollY     // 节点 scroll-y 属性的当前值
+        // 此处返回上面指定要返回的样式名
+        res.margin
+        res.backgroundColor
+      })
+      .exec()
+  }
+})
+```
+
+</details>
+
+### boundingClientRect
+
+**[SelectorQuery](#SelectorQuery) NodesRef.boundingClientRect(NodesRef.boundingClientRectCallback callback)**
+
+> 添加节点的布局位置的查询请求。相对于显示区域，以像素为单位。其功能类似于 DOM 的 `getBoundingClientRect`。
+
+<details>
+<summary><strong>举例</strong></summary>
+
+```js
+Page({
+  getRect() {
+    wx
+      .createSelectorQuery()
+      .select('#the-id')
+      .boundingClientRect(function (rect) {
+        rect.id       // 节点的 ID
+        rect.dataset  // 节点的 dataset
+        rect.left     // 节点的左边界坐标
+        rect.right    // 节点的右边界坐标
+        rect.top      // 节点的上边界坐标
+        rect.bottom   // 节点的下边界坐标
+        rect.width    // 节点的宽度
+        rect.height   // 节点的高度
+      })
+      .exec()
+  },
+
+  /*
+  * 获取多个 NodeRef 的 boundingClientRect
+  */
+  getAllRects() {
+    wx
+      .createSelectorQuery()
+      .selectAll('.a-class')
+      .boundingClientRect(function (rects) {
+        rects.forEach(function (rect) {
+          // react 信息同上
+        })
+      })
+      .exec()
+  }
+})
+```
+
+</details>
+
+### scrollOffset
+
+**[SelectorQuery](#SelectorQuery) NodesRef.scrollOffset(NodesRef.scrollOffsetCallback callback)**
+
+> 添加节点的滚动位置查询请求。以像素为单位。节点必须是 **scroll-view** 或者 **viewport**。
+
+<details>
+<summary><strong>举例</strong></summary>
+
+```js
+Page({
+  getScrollOffset() {
+    wx
+      .createSelectorQuery()
+      .selectViewport()
+      .scrollOffset(function (res) {
+        res.id          // 节点的 ID
+        res.dataset     // 节点的 dataset
+        res.scrollLeft  // 节点的水平滚动位置
+        res.scrollTop   // 节点的竖直滚动位置
+      }).exec()
+  }
+})
+```
+
+</details>
+
+### context
+
+**[SelectorQuery](#SelectorQuery) NodesRef.context(NodesRef.contextCallback callback)**
+
+> 添加节点的 Context 对象查询请求。目前支持
+> [VideoContext](https://developers.weixin.qq.com/miniprogram/dev/api/VideoContext.html)、
+> [CanvasContext](https://developers.weixin.qq.com/miniprogram/dev/api/CanvasContext.html)、
+> [LivePlayerContext](https://developers.weixin.qq.com/miniprogram/dev/api/LivePlayerContext.html) 和
+> **MapContext** 的获取。
+
+<details>
+<summary><strong>举例</strong></summary>
+
+```js
+Page({
+  getContext() {
+    wx
+      .createSelectorQuery()
+      .select('.the-video-class')
+      .context(function (res) {
+        console.log(res.context)
+        // 节点对应的 Context 对象。
+        // 如：选中的节点是 <video> 组件，那么此处即返回 VideoContext 对象
+      })
+      .exec()
+  }
+})
+```
+
+</details>
+
+## 获取节点信息
