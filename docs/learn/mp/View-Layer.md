@@ -561,6 +561,33 @@ WXS 函数的除了纯逻辑的运算，还可以通过封装好的 [ComponentDe
 
 和组件的 `triggerEvent` 一致。
 
+## 获取节点信息
+
+我们可以通过 [SelectorQuery](#SelectorQuery) API 来获取到页面上的 [NodeRef](#NodeRef) 节点；
+
+拿到节点后，我们可以获取到**节点属性**、**样式**、在**界面上的位置**等信息。
+
+虽然我们可以通过 `wx.createSelectorQuery` 来获取节点，但是✨推荐使用 **`this.createSelectorQuery`** 来确保在正确的范围内选择节点。
+
+```js
+// 创建一个 SelectorQuery 选择器
+const query = this.createSelectorQuery()
+
+query
+  .select('#the-id') // 通过 #id 获取到页面上对应的节点
+  .boundingClientRect(function (res) {
+    res.top // #the-id 节点的上边界坐标（相对于显示区域）
+  })
+
+query
+  .selectViewport() // 获取显示区域信息
+  .scrollOffset(function (res) {
+    res.scrollTop // 显示区域的竖直滚动位置
+  })
+
+query.exec() // 执行上面所有命令
+```
+
 ## SelectorQuery
 
 > 选取节点，获取 `NodeRef` 对象。
@@ -790,4 +817,124 @@ Page({
 
 </details>
 
-## 获取节点信息
+## 获取布局相交状态
+
+## IntersectionObserver
+
+我们可以通过 `wx.createIntersectionObserver` 来创建一个**布局相交监听**实例：
+
+但是✨推荐使用 **`this.createIntersectionObserver`** 来确保在正确的范围内选择节点。
+
+```js
+Page({
+  onLoad() {
+    wx
+      /* 创建监听实例 */
+      .createIntersectionObserver(this, {
+        thresholds: [0.2, 0.5], // 默认 [0]，表示所有阈值的数组
+        initialRatio: 0,        // 默认 0，表示初始相交比例，如果调用检测到的相交比例与这个值`不相等`且`达到阈值`，则会触发一次监听器的回调函数。
+        observeAll: false,      // 默认 false，是否同时观测多个目标节点，如果设为 `true`，observe 的 `targetSelector` 将选中多个节点（注意：同时选中过多节点将影响渲染性能）
+      })
+
+      /* 设置 `.relative-class` 为参考目标之一 */
+      .relativeTo('.relative-class', {
+        top: 0,     // 节点布局区域的上边界
+        right: 0,   // 节点布局区域的右边界
+        bottom: 0,  // 节点布局区域的下边界
+        left: 0     // 节点布局区域的左边界
+      })
+
+      /* 设置「页面显示区域」为参考目标之一 */
+      .relativeToViewport({
+        top: 0,     // 节点布局区域的上边界
+        right: 0,   // 节点布局区域的右边界
+        bottom: 0,  // 节点布局区域的下边界
+        left: 0     // 节点布局区域的左边界
+      })
+
+      /* 设置 `.target-class` 为指定目标，并开始监听 */
+      .observe('.target-class', (res) => {
+        res.intersectionRatio       // 相交区域占目标节点的布局区域的比例
+
+        res.intersectionRect        // 相交区域，一个对象
+        res.intersectionRect.left   // 相交区域的左边界坐标
+        res.intersectionRect.top    // 相交区域的上边界坐标
+        res.intersectionRect.width  // 相交区域的宽度
+        res.intersectionRect.height // 相交区域的高度
+      })
+  }
+})
+```
+
+上面代码表示：创建一个**布局相交监听实例**，如果「参考目标」（`.relative-class`）和「指定目标」（`.target-class`）在「页面显示区域」（`.relativeToViewport()`）的相交面积，达到「参考目标」（`.relative-class`）面积的 **20%~50%** 的时候，便会触发 `.observe()` 中的回调函数。
+
+### relativeTo
+
+**IntersectionObserver.relativeTo(string selector, Object margins)**
+
+> 使用选择器指定一个节点，作为**参照区域**「之一」。
+
+### relativeToViewport
+
+**IntersectionObserver.relativeToViewport(Object margins)**
+
+> 指定页面显示区域作为**参照区域**之一「之一」。
+
+```js
+Page({
+  onLoad() {
+    wx
+      .createIntersectionObserver()
+      /* 目标节点（用选择器 `.target-class` 指定）进入显示区域以下 100px 内时，就会触发回调函数 */
+      .relativeToViewport({bottom: 100})
+      .observe('.target-class', (res) => {
+        // ...
+      })
+  }
+})
+```
+
+### observe
+
+**IntersectionObserver.observe(string targetSelector, IntersectionObserver.observeCallback callback)**
+
+> 指定目标节点并开始监听相交状态变化情况。
+
+```js
+Page({
+  onLoad() {
+    wx
+      .createIntersectionObserver()
+      .relativeToViewport()
+      .observe('.target-class', (res) => {
+        res.intersectionRatio       // Number，相交区域占「目标节点」的布局区域的比例
+
+        res.time // Number，相交检测时的时间戳
+
+        res.relativeRect        // Object，参照区域边界
+        res.relativeRect.left   // Number，参照区域边界的左边界坐标
+        res.relativeRect.top    // Number，参照区域边界的上边界坐标
+        res.relativeRect.width  // Number，参照区域边界的宽度
+        res.relativeRect.height // Number，参照区域边界的高度
+
+        res.boundingClientRect        // Object，目标边界
+        res.boundingClientRect.left   // Number，目标边界的左边界坐标
+        res.boundingClientRect.top    // Number，目标边界的上边界坐标
+        res.boundingClientRect.width  // Number，目标边界的宽度
+        res.boundingClientRect.height // Number，目标边界的高度
+
+        res.intersectionRect        // Object，相交区域
+        res.intersectionRect.left   // Number，相交区域的左边界坐标
+        res.intersectionRect.top    // Number，相交区域的上边界坐标
+        res.intersectionRect.width  // Number，相交区域的宽度
+        res.intersectionRect.height // Number，相交区域的高度
+      })
+  }
+})
+```
+
+### disconnect
+
+**IntersectionObserver.disconnect()**
+
+> 停止监听；回调函数将不再触发。
