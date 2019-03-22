@@ -199,6 +199,7 @@ function getBlogSidebar(type) {
       return [
         // ['', '兴趣导航'],
         ['./USB', 'USB 各版本区别及基本知识'],
+        ['./Newifi-Padavan', 'Newifi Mini 刷机教程'],
         // ['./WiFi', '有关 WiFi 的基本知识'],
       ]
 
