@@ -201,6 +201,14 @@ function getBlogSidebar(type) {
         ['./USB', 'USB 各版本区别及基本知识'],
         ['./Newifi-Padavan', 'Newifi Mini 刷机教程'],
         // ['./WiFi', '有关 WiFi 的基本知识'],
+        {
+          title: '装机',
+          children: [
+            ['./Computer/CPU', '如何选购 CPU'],
+            ['./Computer/Power', '如何选购电源'],
+            ['./Computer/Radiator', '如何选购散热器'],
+          ]
+        }
       ]
 
     case '学习':
