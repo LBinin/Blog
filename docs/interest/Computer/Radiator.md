@@ -97,5 +97,5 @@
 ## 参考资料
 
 > [【装机必看】CPU散热器选购指南（风冷）一个散热器也有这么门道？](https://www.bilibili.com/video/av30019967)
-> 
+>  
 > [如何选购散热器？ - 黎小白 | 知乎](https://www.zhihu.com/question/30314966/answer/173751736)
