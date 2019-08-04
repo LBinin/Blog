@@ -100,3 +100,5 @@
 > [【装机必看】电源篇 纹波不稳炸四方，隔壁小孩都吓哭了](https://www.bilibili.com/video/av29410982)
 > 
 > [超能课堂(56)：主动式PFC与被动式PFC电源有什么不同？ - 超能网](https://www.expreview.com/49100.html)
+> 
+> [菜鸟必学的电源秘笈 - 黎小白 | 知乎](https://www.zhihu.com/question/25627616/answer/282543817)

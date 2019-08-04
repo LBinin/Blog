@@ -50,3 +50,5 @@ CPU 有 4 个比较重要的参数：架构、核心、频率、缓存
 > [【小白必看】CPU应该怎么选](https://www.bilibili.com/video/av28848071)
 > 
 > [超能课堂(187)：AMD Zen 2处理器架构为何要如此设计？ - 超能网](https://www.expreview.com/69048.html)
+> 
+> [如何选购台式机内存？ - 黎小白 | 知乎](https://www.zhihu.com/question/55149550/answer/179481576)

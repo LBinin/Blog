@@ -20,8 +20,7 @@ module.exports = {
     // lineNumbers: true,
   },
   extendMarkdown: md => {
-    // 使用 markdown-it 插件
-    md.use(require('markdown-it-task-lists'))
+    // 使用 markdown 插件
   },
   head: [
     // ['link', { rel: 'icon', href: `/logo.png` }],
@@ -207,6 +206,7 @@ function getBlogSidebar(type) {
             ['./Computer/CPU', '如何选购 CPU'],
             ['./Computer/Power', '如何选购电源'],
             ['./Computer/Radiator', '如何选购散热器'],
+            ['./Computer/SSD', '如何选购固态硬盘'],
           ]
         }
       ]
