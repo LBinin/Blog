@@ -207,6 +207,7 @@ function getBlogSidebar(type) {
             ['./Computer/Power', '如何选购电源'],
             ['./Computer/Radiator', '如何选购散热器'],
             ['./Computer/SSD', '如何选购固态硬盘'],
+            ['./Computer/RAM', '如何选购内存条'],
           ]
         }
       ]
