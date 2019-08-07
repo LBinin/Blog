@@ -23,7 +23,7 @@ module.exports = {
     // 使用 markdown 插件
   },
   head: [
-    // ['link', { rel: 'icon', href: `/logo.png` }],
+    ['link', { rel: 'shortcut icon', href: '/images/61541493496_.pic.jpg' }],
     ['link', { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_906851_perbidcu3te.css' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -208,6 +208,7 @@ function getBlogSidebar(type) {
             ['./Computer/Radiator', '如何选购散热器'],
             ['./Computer/SSD', '如何选购固态硬盘'],
             ['./Computer/RAM', '如何选购内存条'],
+            ['./Computer/Monitor', '如何选购显示器'],
           ]
         }
       ]
