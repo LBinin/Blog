@@ -1,4 +1,4 @@
-# Js 高阶函数
+# Js 高阶函数 HOF
 
 > 高阶函数（Higher-order function）英文简称 HOF。
 

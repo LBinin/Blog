@@ -85,7 +85,7 @@ function getBlogSidebar(type) {
           title: 'JavaScript',
           children: [
             ['./JavaScript/JS-Array', 'Js 数组'],
-            ['./JavaScript/JS-HOF', 'Js 高阶函数'],
+            ['./JavaScript/JS-HOF', 'Js 高阶函数 HOF'],
             ['./JavaScript/JS-AOP', 'Js 面向切面编程 AOP'],
             ['./JavaScript/Curry', '柯里化 Curry'],
             ['./JavaScript/JS-Closure', '深入理解闭包及原理'],
@@ -121,6 +121,10 @@ function getBlogSidebar(type) {
             // ['./CSS/block-formatting-context', '深入理解块级格式化上下文（BFC）及应用'],
             ['./CSS/mix-blend-mode', 'CSS 混合模式及 isolation 的作用和表现'],
             ['./CSS/utils', 'CSS 工具库'],
+            ['./CSS/NormalizeCSS', 'Normalize.css'],
+            ['./CSS/CSS-Hover-Perceptual', '利用纯 CSS 完成感知悬停'],
+            ['./CSS/will-change', '关于 will-change 的用法以及一些 web 动画渲染优化'],
+            ['./CSS/animation-connection', '论不同动画衔接之间的小技巧'],
           ]
         },
         {
@@ -131,6 +135,7 @@ function getBlogSidebar(type) {
             ['./base/Regular-Expression', '正则表达式基础'],
             ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
+            ['./base/Nginx-Reverse-Proxy-Cross-Origin', '利用 Nginx 反向代理实现前端跨域'],
           ]
         },
         {
@@ -190,8 +195,10 @@ function getBlogSidebar(type) {
           children: [
             ['./Mac/brew', 'Homebrew - Mac 下的包管理工具'],
             ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
+            ['./Mac/mac-tree', 'Mac 下 tree 命令使用'],
           ]
-        }
+        },
+        ['./FiraCode', 'Fira Code —— 程序员专用字体'],
       ]
 
     case '兴趣':
