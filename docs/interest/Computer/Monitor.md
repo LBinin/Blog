@@ -731,22 +731,12 @@ IPS 面板，2k 分辨率，99%sRGB，deltaE < 2，色彩精准、细腻。
 
 ## 四大金刚
 
-### 优派 XG2703-GS
-
-### [宏碁 XB271HU bmiprz](https://item.jd.com/2204007.html)
-
-### [华硕 PG279Q](https://item.jd.com/2015172.html#crumb-wrap)
-
-### AOC AG271QG
-
-### 对比
-
 |显示器|面板|分辨率|响应时间|刷新率|色域|价格|
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-|[华硕 PG279Q](#华硕-pg279q)|IPS|2k|4ms|165Hz|100%sRGB|￥4399|
-|[AOC 爱攻 AG271QG](#aoc-ag271qg)|IPS|2k|4ms|165Hz|100%sRGB|￥3999|
-|[优派 XG2703-GS](#优派-xg2703-gs)|IPS|2k|4ms|165Hz|100%sRGB|￥3999|
-|[宏碁 掠夺者 XB271HU](#宏碁-xb271hu-bmiprz)|IPS|2k|4ms|144Hz|100%sRGB|￥3988|
+|[华硕 PG279Q](https://item.jd.com/2015172.html#crumb-wrap)|IPS|2k|4ms|165Hz|100%sRGB|￥4399|
+|AOC 爱攻 AG271QG|IPS|2k|4ms|165Hz|100%sRGB|￥3999|
+|优派 XG2703-GS|IPS|2k|4ms|165Hz|100%sRGB|￥3999|
+|[宏碁 掠夺者 XB271HU bmiprz](https://item.jd.com/2204007.html)|IPS|2k|4ms|144Hz|100%sRGB|￥3988|
 
 采用的都是 G-Sync，这里把价格提了一些。
 
