@@ -46,7 +46,7 @@ module.exports = {
         ]
       },
       { text: '📚学习', link: '/learn/' },
-      { text: '✍🏻手记', link: '/words/' },
+      { text: '✒️手记', link: '/words/' },
       { text: '🍃项目', link: '/project/' },
       { text: '💡Todo', link: '/todo/' },
       { text: '👨🏻‍💻关于', link: '/about/' },
@@ -136,6 +136,7 @@ function getBlogSidebar(type) {
             ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
             ['./base/Nginx-Reverse-Proxy-Cross-Origin', '利用 Nginx 反向代理实现前端跨域'],
+            ['./base/Unicode', '彻底搞懂 Unicode'],
           ]
         },
         {
@@ -167,6 +168,12 @@ function getBlogSidebar(type) {
         {
           title: '设计模式',
           children: [
+          ]
+        },
+        {
+          title: '源码阅读',
+          children: [
+            ['./SourceCode/pangu', '「空格之神」源码分析']
           ]
         },
       ]
@@ -216,6 +223,7 @@ function getBlogSidebar(type) {
             ['./Computer/SSD', '如何选购固态硬盘'],
             ['./Computer/RAM', '如何选购内存条'],
             ['./Computer/Monitor', '如何选购显示器'],
+            ['./Computer/GraphicsCard', '如何选购显卡'],
           ]
         }
       ]
