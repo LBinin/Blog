@@ -51,18 +51,61 @@
 - `(?:exp)`：匹配 exp，不捕获匹配的文本，也不给此分组分配组号；
 
 ## 零宽断言
+
 * `(?=exp)`：匹配 exp 前面的位置；
 	`(?=exp)` 也叫「零宽度正预测先行断言」，它断言自身出现的位置的后面能匹配表达式 exp。比如 `\b\w+(?=ing\b)`，匹配以 `ing` 结尾的单词的前面部分（即**除了** `ing` 以外的部分），如查找 `I’m singing while you're dancing.` 时，它会匹配 `sing` 和 `danc`。
 * `(?<=exp)`：匹配 exp 后面的位置；
 	`(?<=exp)` 也叫「零宽度正回顾后发断言」，它断言自身出现的位置的**前面**能匹配表达式 exp。比如 `(?<=\bre)\w+\b` 会匹配以 `re` 开头的单词的后半部分（即**除了** `re` 以外的部分），例如在查找 `reading a book` 时，它匹配 `ading`。
 
 ### 负向零宽断言
+
 * `(?!exp)`：匹配后面跟的不是 exp 的位置；
 * `(?<!exp)`：匹配前面不是 exp 的位置；
 
 ## 实战
+
 1. `\ba\w*\b` 表示匹配以字母 a 开头的单词：先是某个单词开始处 `\b`，然后是字母 a，然后是任意数量的字母、数字、下划线、汉字 `\w*`，最后是单词结束处 `\b`。
 2. `\(?0\d{2}[) -]?\d{8}`：这个表达式可以匹配几种格式的电话号码，像 (010)88886666，或 022-22334455，或 02912345678 等。我们对它进行一些分析吧：首先是一个转义字符 `\(`，它能出现 0 次或 1 次（`?`），然后是一个 0，后面跟着 2 个数字（`\d{2}`），然后是 `)` 或 `-` 或空格中的一个，它出现 1 次或不出现（`?`），最后是 8 个数字（`\d{8}`）。
+
+## Regexper
+
+[Regexper](https://regexper.com/) 是一个用图形解释复杂正则的在线工具
+
+下面是一个检测邮箱的正则表达式
+
+```js
+\^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$\
+```
+
+![邮箱正则表达式](http://ww3.sinaimg.cn/large/006tNc79gy1g6457ucdmcj325f0u0wjk.jpg)
+
+### 数量图解
+
+- `*` 任意次：`[abc]*`
+
+	![*号任意次](http://ww1.sinaimg.cn/large/006tNc79gy1g645ah017sj306o07s3yl.jpg)
+
+- `?` 0 次或 1 次：`[abc]?`
+
+	![?号零次或一次](http://ww1.sinaimg.cn/large/006tNc79gy1g645ckmlkvj306c07caa4.jpg)
+
+- `+` 至少 1 次：`[abc]+`
+
+	![+号至少一次](http://ww4.sinaimg.cn/large/006tNc79gy1g645brqxzfj305q07aq2z.jpg)
+
+- `{x,y}` 数量
+
+	`[abc]{1,2}`：
+	
+	![[abc]{1,2}](http://ww3.sinaimg.cn/large/006tNc79gy1g646hvi7wbj306e07owel.jpg)
+
+	`[abc]{1,99}`：
+	
+	![[abc]{1,99}](http://ww1.sinaimg.cn/large/006tNc79gy1g646igsproj306c07smxa.jpg)
+
+	`[abc]{2,99}`：
+	
+	![[abc]{2,99}](http://ww3.sinaimg.cn/large/006tNc79gy1g646j2x0ttj306c07q0su.jpg)
 
 ## 参考资料
 > [正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
