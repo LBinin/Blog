@@ -1,4 +1,4 @@
-# 「空格之神」源码分析
+# 「空格之神」源码分析（一）正则表达式
 
 ## CJK
 
@@ -60,17 +60,7 @@ CJK 字体列表，是**中、日、韩**统一表意文字在计算机的所有
 
 - `\U30FB` 表示[片假名中间点](https://unicode-table.com/cn/30FB/)
 
-## 全角字符、符号
-
-```js
-// the symbol part only includes ~ ! ; : , . ? but . only matches one character
-const CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK = new RegExp(`([${CJK}])[ ]*([\\:]+|\\.)[ ]*([${CJK}])`, 'g')
-const CONVERT_TO_FULLWIDTH_CJK_SYMBOLS = new RegExp(`([${CJK}])[ ]*([~\\!;,\\?]+)[ ]*`, 'g')
-const DOTS_CJK = new RegExp(`([\\.]{2,}|\u2026)([${CJK}])`, 'g')
-const FIX_CJK_COLON_ANS = new RegExp(`([${CJK}])\\:([A-Z0-9\\(\\)])`, 'g')
-```
-
-### 名词解释
+## 名词解释
 
 先解释一些相关名词：
 
@@ -84,47 +74,93 @@ const FIX_CJK_COLON_ANS = new RegExp(`([${CJK}])\\:([A-Z0-9\\(\\)])`, 'g')
 
 接下来说一说上面的相关正则表达式。
 
-### 全角 CJK + 符号 + CJK
+## CJK + 符号 + CJK 转全角符号
+
+### 正则表达式
+
+**`CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK`**
 
 ```js
-\([${CJK}])[ ]*([\\:]+|\\.)[ ]*([${CJK}])\
+new RegExp(`([${CJK}])[ ]*([\\:]+|\\.)[ ]*([${CJK}])`, 'g')
 ```
 
-**`CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK`** 正则图解：
+### 正则图解
 
 ![CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK](http://ww3.sinaimg.cn/large/006tNc79gy1g644woptoqj31320jqgom.jpg)
 
-### 全角 CJK + 符号
+### 操作
 
-**`CONVERT_TO_FULLWIDTH_CJK_SYMBOLS`** 正则图解：
+```js
+newText = newText.replace(CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK, (match, leftCjk, symbols, rightCjk) => {
+    const fullwidthSymbols = self.convertToFullwidth(symbols)
+    return `${leftCjk}${fullwidthSymbols}${rightCjk}`
+})
+```
+
+## CJK + 符号转全角符号
+
+### 正则表达式
+
+**`CONVERT_TO_FULLWIDTH_CJK_SYMBOLS`**
 
 这里的符号部分只包括 `~` `!` `;` `:` `,` `.` `?`，但是 `.` 号只匹配一个字符。
 
 ```js
-\([${CJK}])[ ]*([~\\!;,\\?]+)[ ]*\
+new RegExp(`([${CJK}])[ ]*([~\\!;,\\?]+)[ ]*`, 'g')
 ```
+
+### 正则图解
 
 ![CONVERT_TO_FULLWIDTH_CJK_SYMBOLS](http://ww1.sinaimg.cn/large/006tNc79gy1g644wb1xz4j30u00jojtp.jpg)
 
-### 符号 `.` + CJK
-
-**`DOTS_CJK`** 正则图解：
+### 操作
 
 ```js
-\([\\.]{2,}|\u2026)([${CJK}])\
+newText = newText.replace(CONVERT_TO_FULLWIDTH_CJK_SYMBOLS, (match, cjk, symbols) => {
+    const fullwidthSymbols = self.convertToFullwidth(symbols)
+    return `${cjk}${fullwidthSymbols}`
+})
 ```
+
+## 符号 `.` + CJK
+
+### 正则表达式
+
+**`DOTS_CJK`**
+
+```js
+new RegExp(`([\\.]{2,}|\u2026)([${CJK}])`, 'g')
+```
+
+### 正则图解
 
 ![DOTS_CJK](http://ww4.sinaimg.cn/large/006tNc79gy1g645nyloa2j30io0jqwgf.jpg)
 
-### CJK + 冒号 + ANS
-
-**`FIX_CJK_COLON_ANS`** 正则图解：
+### 操作
 
 ```js
-\([${CJK}])\\:([A-Z0-9\\(\\)])\
+newText = newText.replace(DOTS_CJK, '$1 $2')
 ```
 
+## CJK + 冒号 + ANS
+
+### 正则表达式
+
+**`FIX_CJK_COLON_ANS`**
+
+```js
+new RegExp(`([${CJK}])\\:([A-Z0-9\\(\\)])`, 'g')
+```
+
+### 正则图解
+
 ![FIX_CJK_COLON_ANS](http://ww3.sinaimg.cn/large/006tNc79gy1g645pzypg3j30j40judhq.jpg)
+
+### 操作
+
+```js
+newText = newText.replace(FIX_CJK_COLON_ANS, '$1：$2')
+```
 
 ## 不包含 `'` 的符号
 
