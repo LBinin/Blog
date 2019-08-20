@@ -1,6 +1,46 @@
 # 「空格之神」源码分析（一）正则表达式
 
-## CJK
+「空格之神」又名[为什么你们就是不能加个空格呢？](https://github.com/vinta/pangu.js)，是一款能够自动在网页中所有的中文字和半形的英文、数字、符号之间插入空白的插件。
+
+[Chrome 插件地址](https://chrome.google.com/webstore/detail/%E7%82%BA%E4%BB%80%E9%BA%BC%E4%BD%A0%E5%80%91%E5%B0%B1%E6%98%AF%E4%B8%8D%E8%83%BD%E5%8A%A0%E5%80%8B%E7%A9%BA%E6%A0%BC%E5%91%A2%EF%BC%9F/paphcfdffjnbcgkokihcdjliihicmbpd?)
+
+曾经在一次被同学安利了在中西文之间加入空格的习惯，从此不可自拔，包括写笔记甚至聊天，都必须在中西文之间加入空格，否则坐立难安。
+
+这款插件可以说是救我于水火之中，毫不夸张，我这条命，就是「空格之神」给的！
+
+![我这条命，就是「空格之神」给的](http://ww2.sinaimg.cn/large/006tNc79gy1g65tlnenp3j30a00a0q39.jpg)
+
+正如在插件的选项页中介绍的那样：
+
+> 汉学家称这个空白字元为「盘古之白」，因为它劈开了全形字和半形字之间的混沌。另有研究显示，打字的时候不喜欢在中文和英文之间加空格的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情跟书写都需要适时地留白。
+
+每次使用的时候，都在好奇是如何去插入空白的，所以想更深入的了解，正好补一补正则，故有了这篇博文。
+
+## 逻辑梳理
+
+`/src/shared/core.js` 为项目的核心文件，它暴露了一个 `Pangu` 类：
+
+```js
+const pangu = new Pangu()
+
+module.exports = pangu
+module.exports.default = pangu
+module.exports.Pangu = Pangu // 暴露类
+```
+
+### convertToFullwidth
+
+### spacing
+
+### spacingText
+
+### spacingTextSync
+
+## 定义解释
+
+先解释一些相关定义：
+
+### CJK
 
 ```js
 // CJK is short for Chinese, Japanese, and Korean.
@@ -26,7 +66,7 @@ const CJK = '\u2e80-\u2eff\u2f00-\u2fdf\u3040-\u309f\u30a0-\u30fa\u30fc-\u30ff\u
 const ANY_CJK = new RegExp(`[${CJK}]`);
 ```
 
-这一段定义了 CJK 的范围及其正则表达式，表示「CJK 字体列表」
+这一段定义了「空格之神」中匹配的 CJK 的范围及其正则表达式，表示「CJK 字体列表」
 
 :::tip CJK 字体列表
 CJK 字体列表，是**中、日、韩**统一表意文字在计算机的所有字体列表。
@@ -60,11 +100,9 @@ CJK 字体列表，是**中、日、韩**统一表意文字在计算机的所有
 
 - `\U30FB` 表示[片假名中间点](https://unicode-table.com/cn/30FB/)
 
-## 名词解释
+### ANS
 
-先解释一些相关名词：
-
-**ANS**：Alphabets、Numbers、Symbols 的缩写
+Alphabets、Numbers、Symbols 的缩写
 
 - **A** 代表 `A-Za-z\u0370-\u03ff`，**字母**加上[希腊字母及科普特字母](https://unicode-table.com/cn/blocks/greek-coptic/)；
 
@@ -97,6 +135,21 @@ newText = newText.replace(CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK, (match, leftCjk,
 })
 ```
 
+在匹配了 `CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK` 之后，将其中的 Group2，也就是 Symbols 符号部分，替换为全角符号，具体替换内容如下：
+
+```js
+convertToFullwidth(symbols) {
+    return symbols
+        .replace(/~/g, '～')
+        .replace(/!/g, '！')
+        .replace(/;/g, '；')
+        .replace(/:/g, '：')
+        .replace(/,/g, '，')
+        .replace(/\./g, '。')
+        .replace(/\?/g, '？')
+}
+```
+
 ## CJK + 符号转全角符号
 
 ### 正则表达式
@@ -121,6 +174,8 @@ newText = newText.replace(CONVERT_TO_FULLWIDTH_CJK_SYMBOLS, (match, cjk, symbols
     return `${cjk}${fullwidthSymbols}`
 })
 ```
+
+同上面一样，在匹配了 `CONVERT_TO_FULLWIDTH_CJK_SYMBOLS` 之后，将其中的 Symbols 符号部分，替换为全角符号。
 
 ## 符号 `.` + CJK
 
@@ -162,80 +217,93 @@ new RegExp(`([${CJK}])\\:([A-Z0-9\\(\\)])`, 'g')
 newText = newText.replace(FIX_CJK_COLON_ANS, '$1：$2')
 ```
 
-## 不包含 `'` 的符号
+## CJK + 引号
+
+### 正则表达式
+
+**`CJK_QUOTE`**
 
 ```js
-// the symbol part does not include '
-const CJK_QUOTE = new RegExp(`([${CJK}])([\`"\u05f4])`, 'g');
-const QUOTE_CJK = new RegExp(`([\`"\u05f4])([${CJK}])`, 'g');
-const FIX_QUOTE_ANY_QUOTE = /([`"\u05f4]+)[ ]*(.+?)[ ]*([`"\u05f4]+)/g;
-
-const CJK_SINGLE_QUOTE_BUT_POSSESSIVE = new RegExp(`([${CJK}])('[^s])`, 'g');
-const SINGLE_QUOTE_CJK = new RegExp(`(')([${CJK}])`, 'g');
-const FIX_POSSESSIVE_SINGLE_QUOTE = new RegExp(`([A-Za-z0-9${CJK}])( )('s)`, 'g');
+new RegExp(`([${CJK}])([\`"\u05f4])`, 'g')
 ```
-
-### CJK + 引号
-
-**CJK_QUOTE** 正则图解：
-
-```js
-\([${CJK}])([\`"\u05f4])\
-```
-
-**`CJK_QUOTE`** 正则图解：
 
 `U+05F4` 代表的是[希伯来文标点 Gershayim](https://unicode-table.com/cn/05F4/) 的 <code>&#1524;</code>
 
+### 正则图解
+
 ![CJK_QUOTE](http://ww2.sinaimg.cn/large/006tNc79gy1g6475f8jl0j30ga0ju0uf.jpg)
 
-### 引号 + CJK
+## 引号 + CJK
+
+### 正则表达式
+
+**`QUOTE_CJK`**
 
 ```js
-\([\`"\u05f4])([${CJK}])\
+new RegExp(`([\`"\u05f4])([${CJK}])`, 'g')
 ```
 
-**`QUOTE_CJK`** 正则图解：
+`U+05F4` 代表的是[希伯来文标点 Gershayim](https://unicode-table.com/cn/05F4/) 的 <code>&#1524;</code>
+
+### 正则图解
 
 ![QUOTE_CJK](http://ww2.sinaimg.cn/large/006tNc79gy1g6475s38ndj30g40jgabs.jpg)
 
-### 引号 + 任意字符 + 引号
+## 引号 + 任意字符 + 引号
+
+### 正则表达式
+
+**`FIX_QUOTE_ANY_QUOTE`**
 
 ```js
-\([`"\u05f4]+)[ ]*(.+?)[ ]*([`"\u05f4]+)\
+/([`"\u05f4]+)[ ]*(.+?)[ ]*([`"\u05f4]+)/g
 ```
 
-**`FIX_QUOTE_ANY_QUOTE`** 正则图解：
+`U+05F4` 代表的是[希伯来文标点 Gershayim](https://unicode-table.com/cn/05F4/) 的 <code>&#1524;</code>
+
+### 正则图解
 
 ![FIX_QUOTE_ANY_QUOTE](http://ww2.sinaimg.cn/large/006tNc79gy1g6476nj9fjj30uw08wmy1.jpg)
 
-### 非所有格的单引号
+## 非所有格的单引号
+
+### 正则表达式
+
+**`CJK_SINGLE_QUOTE_BUT_POSSESSIVE`**
 
 ```js
-\([${CJK}])('[^s])\
+new RegExp(`([${CJK}])('[^s])`, 'g')
 ```
 
-**`CJK_SINGLE_QUOTE_BUT_POSSESSIVE`** 正则图解：
+### 正则图解
 
 ![CJK_SINGLE_QUOTE_BUT_POSSESSIVE](http://ww3.sinaimg.cn/large/006tNc79gy1g648b3c4acj30go0jcmys.jpg)
 
-### 所有格单引号
+## 所有格单引号
+
+### 正则表达式
+
+**`FIX_POSSESSIVE_SINGLE_QUOTE`**
 
 ```js
-\([A-Za-z0-9${CJK}])( )('s)\
+new RegExp(`([A-Za-z0-9${CJK}])( )('s)`, 'g')
 ```
 
-**`FIX_POSSESSIVE_SINGLE_QUOTE`** 正则图解：
+### 正则图解
 
 ![FIX_POSSESSIVE_SINGLE_QUOTE](http://ww1.sinaimg.cn/large/006tNc79gy1g648eilojmj30h00o2gly.jpg)
 
-### 单引号 + CJK
+## 单引号 + CJK
+
+### 正则表达式
+
+**`SINGLE_QUOTE_CJK`** 
 
 ```js
-\(')([${CJK}])\
+new RegExp(`(')([${CJK}])`, 'g')
 ```
 
-**`SINGLE_QUOTE_CJK`** 正则图解：
+### 正则图解
 
 ![SINGLE_QUOTE_CJK](http://ww4.sinaimg.cn/large/006tNc79gy1g648cdeyndj30e80jg0ub.jpg)
 
