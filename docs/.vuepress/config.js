@@ -267,6 +267,12 @@ function getBlogSidebar(type) {
           ]
         },
         {
+          title: '日语',
+          children: [
+            './japanese/gojūon'
+          ]
+        },
+        {
           title: 'League of Legends',
           children: [
             ['./lol/rune', '符文系统']
