@@ -31,6 +31,6 @@ By Bigno with love ❤️
 
 ---
 
-[![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)
+[<img src="https://travis-ci.org/LBinin/Blog.png?branch=master" alt="Build Status"/>](https://travis-ci.org/LBinin/Blog)
 
 <Vssue :title="$title" />
