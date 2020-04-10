@@ -33,4 +33,4 @@ By Bigno with love ❤️
 
 [![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)
 
-<!-- <Vssue :title="$title" /> -->
+<Vssue :title="$title" />
