@@ -1,18 +1,17 @@
 language: node_js
-node_js:
-- '10'
+node_js: stable
 before_install:
 - openssl aes-256-cbc -K $encrypted_a2c824ace89e_key -iv $encrypted_a2c824ace89e_iv
   -in id_rsa_blog.enc -out ~/.ssh/id_rsa_blog -d
 - chmod 600 ~/.ssh/id_rsa_blog
 - echo -e "Host lbinin.com\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/id_rsa_blog" >> ~/.ssh/config
-- yarn global add vuepress
+- npm install -g vuepress
 addons:
   ssh_known_hosts: lbinin.com
 install:
-- yarn install
+- npm install
 script:
-- yarn docs:build
+- npm run docs:build
 after_success:
 - cd docs/.vuepress/dist
 - scp -o stricthostkeychecking=no -r ./* root@lbinin.com:/usr/local/nginx/html/blog.lbinin.com
