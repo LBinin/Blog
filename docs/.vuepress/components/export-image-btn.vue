@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import html2canvas from "html2canvas"
-
 export default {
   props: {
     label: {
@@ -92,14 +90,17 @@ export default {
       this.loading = true;
       const el = this.target;
       const options = this.options;
-      html2canvas(el, options).then(canvas => {
-        this.imageSrc = canvas.toDataURL("image/jpeg");
-        this.loading = false;
-        this.showResult = true;
-        setTimeout(() => {
-          this.$refs.exportImagesResult.scrollTo(0, 0);
-        }, 0);
-      });
+      if (window) {
+        const html2canvas = require("html2canvas")
+        html2canvas(el, options).then(canvas => {
+          this.imageSrc = canvas.toDataURL("image/jpeg");
+          this.loading = false;
+          this.showResult = true;
+          setTimeout(() => {
+            this.$refs.exportImagesResult.scrollTo(0, 0);
+          }, 0);
+        });
+      }
     },
 
     closeView() {
