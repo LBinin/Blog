@@ -25,18 +25,20 @@
   },
   "homepage": "https://github.com/LBinin/Blog#readme",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.0.0-alpha.0",
-    "@vuepress/plugin-blog": "^1.0.0-alpha.0",
-    "@vuepress/plugin-medium-zoom": "^1.0.0-alpha.0",
-    "@vuepress/plugin-pwa": "^1.0.0-alpha.0",
-    "@vuepress/plugin-search": "^1.0.0-alpha.0",
-    "node-sass": "^4.10.0",
-    "sass-loader": "^7.1.0"
+    "@vuepress/plugin-back-to-top": "^1.4.0",
+    "@vuepress/plugin-blog": "^1.9.2",
+    "@vuepress/plugin-medium-zoom": "^1.4.0",
+    "@vuepress/plugin-pwa": "^1.4.0",
+    "@vuepress/plugin-search": "^1.4.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^7.3.1"
   },
   "dependencies": {
-    "element-ui": "^2.4.11",
+    "@vssue/api-github-v3": "^1.4.3",
+    "@vssue/vuepress-plugin-vssue": "^1.4.3",
+    "element-ui": "^2.13.0",
     "global": "^4.3.2",
-    "html2canvas": "^1.0.0-alpha.12",
-    "vuepress": "^1.0.0-alpha.31"
+    "html2canvas": "^1.0.0-rc.5",
+    "vuepress": "^1.4.0"
   }
 }

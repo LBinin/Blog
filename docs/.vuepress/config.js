@@ -72,6 +72,16 @@ module.exports = {
       },
       popupComponent: 'update-popup',
     },
+    '@vssue/vuepress-plugin-vssue': {
+      // 设置 `platform` 而不是 `api`
+      platform: 'github',
+
+      // 其他的 Vssue 配置
+      owner: 'LBinin',
+      repo: 'LBinin/blog',
+      clientId: '3f1773bdba3e6412b1c3',
+      clientSecret: 'c32ecbe171c0e428c6a201f119e6a343c9ff0e59',
+    },
   }
 };
 
