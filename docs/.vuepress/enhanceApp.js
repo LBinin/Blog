@@ -9,14 +9,14 @@ export default ({
   router, // 当前应用的路由实例
   siteData // 站点元数据
 }) => {
+  for (const [name, component] of Object.entries(pageComponents)) {
+    Vue.component(name, component)
+  }
+
   Vue.use(ExportImageBtn)
   Vue.use(Rate)
   Vue.use(Badge)
   Vue.use(Button)
   Vue.use(Tag)
   Vue.use(Checkbox)
-
-  for (const [name, component] of Object.entries(pageComponents)) {
-    Vue.component(name, component)
-  }
 }

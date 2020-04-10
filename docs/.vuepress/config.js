@@ -77,8 +77,8 @@ module.exports = {
       // 其他的 Vssue 配置
       owner: 'LBinin',
       repo: 'blog',
-      clientId: '3f1773bdba3e6412b1c3',
-      clientSecret: 'c32ecbe171c0e428c6a201f119e6a343c9ff0e59',
+      clientId: '419d8398637d9ad08e3c',
+      clientSecret: 'e77968bb9abf37c324b3d736679977590c1a1978',
     },
   }
 };
