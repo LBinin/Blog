@@ -1,3 +1,4 @@
+import pageComponents from '@internal/page-components'
 import { Rate, Badge, Button, Tag, Checkbox } from 'element-ui'
 import ExportImageBtn from './components/export-image-btn'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -14,4 +15,8 @@ export default ({
   Vue.use(Button)
   Vue.use(Tag)
   Vue.use(Checkbox)
+
+  for (const [name, component] of Object.entries(pageComponents)) {
+    Vue.component(name, component)
+  }
 }

@@ -9,7 +9,7 @@
 
 我是该业务的项目经理我叫比格漏
 
-~~只要你说「LPL 牛逼」~~ 来到这，你就是我的朋友 ![干杯](./61541493496_.pic.jpg)
+~~只要你说「LPL 牛逼」~~ 来到这，你就是我的朋友 ![干杯](./public/images/61541493496_.pic.jpg)
 
 呐，下面是你的入场券，快去参观一下~
 
@@ -32,3 +32,5 @@ By Bigno with love ❤️
 ---
 
 [![Build Status](https://travis-ci.org/LBinin/Blog.png?branch=master)](https://travis-ci.org/LBinin/Blog)
+
+<!-- <Vssue :title="$title" /> -->
