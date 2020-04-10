@@ -106,6 +106,9 @@ function getBlogSidebar(type) {
         },
         {
           title: 'Vue',
+          children: [
+            ['./Vue/ssr', 'Vue SSR 指南'],
+          ],
         },
         {
           title: 'HTML',
