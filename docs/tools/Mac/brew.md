@@ -17,6 +17,20 @@ $ brew update
 $ brew doctor
 ```
 
+## 换源
+
+- 中科大
+
+    [替换及重置Homebrew默认源 LUG@USTC](https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git)
+
+    [Homebrew Bottles源 LUG@USTC](https://lug.ustc.edu.cn/wiki/mirrors/help/homebrew-bottles)
+
+- 清华
+
+    [Homebrew | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror](https://mirror.tuna.tsinghua.edu.cn/help/homebrew/)
+
+    [Homebrew Bottles | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew-bottles/)
+
 ### 常用命令
 
 ```bash
@@ -96,7 +110,7 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 ## 参考资料
 
 > [Mac下Homebrew的安装与使用 - 简书](https://www.jianshu.com/p/bca8fc1ff3f0)
-> 
+>
 > [xcode-select —install 解决方案 - lucky9322的专栏 - CSDN博客](https://blog.csdn.net/lucky9322/article/details/79036877)
-> 
+>
 > [在 Mac 上使用 Git 一定要安装 Xcode 吗? - 知乎](https://www.zhihu.com/question/37165801)

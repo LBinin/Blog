@@ -37,6 +37,19 @@ p
     display block
     margin 0 auto
 
+div[class*="language-"]
+  &::before
+    font-weight bold
+    background #444
+    color #aaa !important
+    text-transform uppercase
+    border-radius 4px
+    padding 2px 5px
+  pre
+    // 增强代码在 webkit 下滚动性能
+    -webkit-overflow-scrolling touch
+
+
 // 增强当前文章提示效果
 .sidebar-group-items
   & > li > .sidebar-link

@@ -20,11 +20,10 @@ module.exports = {
     // lineNumbers: true,
   },
   extendMarkdown: md => {
-    // 使用 markdown-it 插件
-    md.use(require('markdown-it-task-lists'))
+    // 使用 markdown 插件
   },
   head: [
-    // ['link', { rel: 'icon', href: `/logo.png` }],
+    ['link', { rel: 'shortcut icon', href: '/images/61541493496_.pic.jpg' }],
     ['link', { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_906851_perbidcu3te.css' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -47,7 +46,7 @@ module.exports = {
         ]
       },
       { text: '📚学习', link: '/learn/' },
-      { text: '✍🏻手记', link: '/words/' },
+      { text: '✒️手记', link: '/words/' },
       { text: '🍃项目', link: '/project/' },
       { text: '💡Todo', link: '/todo/' },
       { text: '👨🏻‍💻关于', link: '/about/' },
@@ -86,7 +85,7 @@ function getBlogSidebar(type) {
           title: 'JavaScript',
           children: [
             ['./JavaScript/JS-Array', 'Js 数组'],
-            ['./JavaScript/JS-HOF', 'Js 高阶函数'],
+            ['./JavaScript/JS-HOF', 'Js 高阶函数 HOF'],
             ['./JavaScript/JS-AOP', 'Js 面向切面编程 AOP'],
             ['./JavaScript/Curry', '柯里化 Curry'],
             ['./JavaScript/JS-Closure', '深入理解闭包及原理'],
@@ -107,6 +106,9 @@ function getBlogSidebar(type) {
         },
         {
           title: 'Vue',
+          children: [
+            ['./Vue/ssr', 'Vue SSR 指南'],
+          ],
         },
         {
           title: 'HTML',
@@ -122,6 +124,10 @@ function getBlogSidebar(type) {
             ['./CSS/block-formatting-context', '深入理解块级格式化上下文（BFC）及应用'],
             ['./CSS/mix-blend-mode', 'CSS 混合模式及 isolation 的作用和表现'],
             ['./CSS/utils', 'CSS 工具库'],
+            ['./CSS/NormalizeCSS', 'Normalize.css'],
+            ['./CSS/CSS-Hover-Perceptual', '利用纯 CSS 完成感知悬停'],
+            ['./CSS/will-change', '关于 will-change 的用法以及一些 web 动画渲染优化'],
+            ['./CSS/animation-connection', '论不同动画衔接之间的小技巧'],
           ]
         },
         {
@@ -132,6 +138,8 @@ function getBlogSidebar(type) {
             ['./base/Regular-Expression', '正则表达式基础'],
             ['./base/Critical-Rendering-Path', '浏览器渲染中的「关键渲染路径」CRP'],
             ['./base/Meta-Programming', '关于元数据和元编程'],
+            ['./base/Nginx-Reverse-Proxy-Cross-Origin', '利用 Nginx 反向代理实现前端跨域'],
+            ['./base/Unicode', '彻底搞懂 Unicode'],
           ]
         },
         {
@@ -165,6 +173,12 @@ function getBlogSidebar(type) {
           children: [
           ]
         },
+        {
+          title: '源码阅读',
+          children: [
+            ['./SourceCode/pangu', '「空格之神」源码分析']
+          ]
+        },
       ]
 
     case '后端':
@@ -191,15 +205,30 @@ function getBlogSidebar(type) {
           children: [
             ['./Mac/brew', 'Homebrew - Mac 下的包管理工具'],
             ['./Mac/zsh', '强大的 zsh 及 oh my zsh'],
+            ['./Mac/mac-tree', 'Mac 下 tree 命令使用'],
           ]
-        }
+        },
+        ['./FiraCode', 'Fira Code —— 程序员专用字体'],
       ]
 
     case '兴趣':
       return [
         // ['', '兴趣导航'],
         ['./USB', 'USB 各版本区别及基本知识'],
+        ['./Newifi-Padavan', 'Newifi Mini 刷机教程'],
         // ['./WiFi', '有关 WiFi 的基本知识'],
+        {
+          title: '装机',
+          children: [
+            ['./Computer/CPU', '如何选购 CPU'],
+            ['./Computer/Power', '如何选购电源'],
+            ['./Computer/Radiator', '如何选购散热器'],
+            ['./Computer/SSD', '如何选购固态硬盘'],
+            ['./Computer/RAM', '如何选购内存条'],
+            ['./Computer/Monitor', '如何选购显示器'],
+            ['./Computer/GraphicsCard', '如何选购显卡'],
+          ]
+        }
       ]
 
     case '学习':
@@ -225,8 +254,7 @@ function getBlogSidebar(type) {
           children: [
             ['./mp/', '小程序入手'],
             ['./mp/Logic-Layer', '逻辑层'],
-            // ['./mp/wxss', 'WXSS'],
-            // ['./mp/wxml', 'WXML'],
+            ['./mp/View-Layer', '视图层'],
           ]
         },
         {
