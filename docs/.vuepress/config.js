@@ -119,7 +119,7 @@ function getBlogSidebar(type) {
           children: [
             // ['./CSS/zindex', 'z-index 详解'],
             ['./CSS/css-stacking-context', '深入理解 CSS 层叠上下文'],
-            // ['./CSS/block-formatting-context', '深入理解块级格式化上下文（BFC）及应用'],
+            ['./CSS/block-formatting-context', '深入理解块级格式化上下文（BFC）及应用'],
             ['./CSS/mix-blend-mode', 'CSS 混合模式及 isolation 的作用和表现'],
             ['./CSS/utils', 'CSS 工具库'],
           ]
