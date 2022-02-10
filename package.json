@@ -30,7 +30,7 @@
     "@vuepress/plugin-medium-zoom": "^1.4.0",
     "@vuepress/plugin-pwa": "^1.4.0",
     "@vuepress/plugin-search": "^1.4.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.3.1"
   },
   "dependencies": {
